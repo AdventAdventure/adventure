@@ -188,6 +188,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\Tweet.cs" />
     <Compile Include="Services\TwitterHashtagMonitor.cs" />
     <Compile Include="Services\TweetParser.cs" />
   </ItemGroup>
