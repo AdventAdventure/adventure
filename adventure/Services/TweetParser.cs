@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Adventure.Models;
 
 namespace Adventure.Services
 {
     public static class TweetParser
     {
-        public static void Main(Tweet twitterMessage)
+        public static async Task Main(Tweet twitterMessage)
         {
             var twitterUser = twitterMessage.TwitterUserIdentifier;
             var hashtags = twitterMessage.HashTags.ToList();
