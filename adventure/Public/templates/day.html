@@ -1,8 +1,10 @@
 <div class="slab">
-	<h1>{{day.Challenge.Hashtag}}</h1>
-	<h2>{{day.Challenge.Title}}</h2>
+	<h1>{{day.Challenge.Name}}</h1>
+	<h2>#AdventHunt{{day.Day}}</h2>
 
-	<a href="#" class="button tweet">Tweet your entry</a>
+	<span ng-bind-html="tweet"></span>
 	<a href="/#/day/{{day.Day}}/entries" class="button">View all entries</a>
 	<a href="/#/day/{{day.Day}}/details" class="button">Find out more</a>
 </div>
+
+<div class="slab slab--content"></div>

@@ -65,7 +65,7 @@ th {
 
 body {
 	padding-bottom: 4.5rem;
-	background: #3C4C60;
+	background: #9F242F;
 	color: #515151;
 	font: 300 16px /1.5 'Josefin Sans', sans-serif;
 }
@@ -147,7 +147,7 @@ h2 {
 .main-nav {
 	text-align: center;
 	text-transform: uppercase;
-	background: rgba( 255, 255, 255, 0.8 );
+	background: rgba( 223, 84, 85, 0.9 );
 	position: fixed;
 	z-index: 10;
 	height: 3.5rem;
@@ -168,7 +168,7 @@ h2 {
 }
 
 .main-nav li + li {
-	border-left: 1px solid #CCC;
+	border-left: 1px solid #9F242F;
 }
 
 .main-nav a {
@@ -179,7 +179,7 @@ h2 {
 	height: 3.5rem;
 	padding: 0.4rem 0 0;
 	font-size: 0.875em;
-	color: #666;
+	color: #EEE;
 }
 
 .main-nav a img {
@@ -188,7 +188,7 @@ h2 {
 }
 
 .main-nav a:hover {
-	color: #333;
+	color: #FFF;
 }
 
 .main-nav a:hover img {
@@ -204,22 +204,23 @@ h2 {
 --------------------------------*/
 
 .button {
-	box-shadow: 3px 3px 0 0 #4C5868;
+	box-shadow: 3px 3px 0 0 #8F141F;
 	cursor: pointer;
 	padding: 0.8rem 1.5rem;
 	display: inline-block;
 	margin: 1rem 1rem 1.5rem 0;
-	background: #3C4C60;
+	border: none;
+	background: #9F242F;
 	width: auto;
 	text-align: center;
 	color: #FFF;
 	font: 400 1em 'Josefin Slab', sans-serif;
 }
 
-.button.tweet {
+/*.button.tweet {
 	background: #19B5FE;
 	box-shadow: 3px 3px 0 0 #447890;
-}
+}*/
 
 .button + .button {
 	margin-top: 0;
@@ -234,7 +235,7 @@ h2 {
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
 	position: relative;
-	background: rgba( 255, 255, 255, 0.1 );
+	background: #DF5554;
 	color: #FFF;
 }
 
@@ -279,8 +280,8 @@ h2 {
 }
 
 .challenge--home {
-	width: 25%;
-	float: left;
+	/*width: 25%;
+	float: left;*/
 }
 
 .challenge--home a {
