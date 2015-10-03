@@ -23,9 +23,10 @@ var Adventure = (function () {
 
                 },
 
-                Day: function ( $routeParams ) {
+                Day: function ( $urlRouter ) {
 
-                    this.params = $routeParams;
+                    console.log( 'b' );
+                    this.params = $urlRouter;
 
                 },
 
@@ -64,7 +65,7 @@ var Adventure = (function () {
 
             Router: function ( $stateProvider, $urlRouterProvider ) {
 
-                $urlRouterProvider.otherwise( '/404' );
+                // $urlRouterProvider.otherwise( '/404' );
 
                 $stateProvider
                     .state('days', {
@@ -72,15 +73,11 @@ var Adventure = (function () {
                         templateUrl: 'public/templates/days.html',
                         controller: Adventure.Angular.Controller.Days
                     })
-                    .state('404', {
-                        url: "/404",
-                        templateUrl: 'public/templates/404.html',
-                        controller: Adventure.Angular.Controller.FourOhFour
-                    })
-                    .state('day.day_id', {
-                        url: "/day/day_id",
+                    .state('day', {
+                        url: "/day/{day_id}",
                         templateUrl: 'public/templates/day.html',
-                        controller: Adventure.Angular.Controller.Day
+                        controller: Adventure.Angular.Controller.Day,
+                        controllerAs: 'day'
                     })
                     .state('rankings', {
                         url: "/rankings",
@@ -158,8 +155,6 @@ var Adventure = (function () {
 }());
 
 var app = angular.module( 'adventure', [ 'ui.router' ] );
-
-app.controller('dayController', ['$routeParams', Adventure.Angular.Controller.Day ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', Adventure.Angular.Router ]);
 

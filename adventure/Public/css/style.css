@@ -133,7 +133,7 @@ h2 {
 	color: #FFF;
 }
 
-/*
+/* Main nav
 --------------------------------*/
 
 .main-nav {
@@ -141,6 +141,7 @@ h2 {
 	text-transform: uppercase;
 	background: rgba( 255, 255, 255, 0.8 );
 	position: fixed;
+	z-index: 10;
 	height: 3.5rem;
 	bottom: 0;
 	width: 100%;
