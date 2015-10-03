@@ -11,9 +11,11 @@ namespace Adventure.Controllers
     {
         public HttpResponseMessage Get()
         {
+            var result = new Ranking();
+
             using (var context = new AdventureContext())
             {
-                var result = new Ranking();
+                var t = context.Users.First();
 
                 result.Positions = (from r in context.Responses
                                     from c in context.Challenges.Where(x => x.ChallengeId == r.ChallengeId)
@@ -23,13 +25,13 @@ namespace Adventure.Controllers
                                     {
                                         Points = g.Sum(x => x.Value) ?? 0,
                                         UserName = g.Key.UserName
-                                    }).OrderByDescending(x => x.Points).AsEnumerable();
-
-                if (result.Positions.Count() > 1)
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-
-                return Request.CreateResponse(HttpStatusCode.OK, new Ranking());
+                                    }).OrderByDescending(x => x.Points).ToList();
             }
+
+            if (result.Positions.Count() > 1)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            return Request.CreateResponse(HttpStatusCode.OK, new Ranking());
         }
     }
 }
