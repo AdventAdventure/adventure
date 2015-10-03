@@ -176,9 +176,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\DaysController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserBadge.cs" />
+    <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Ranking.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
