@@ -18,7 +18,8 @@ namespace Adventure.Services
                 var hashtags = ParseHashtags( TwitterMessage.Text );
                 if ( hashtags.Any( h => !h.Value.Contains( "#submit" ) ) )
                 {
-                    return;
+                    //Not a submission
+                    return; /////<---- FIX
                 }
                 int i = 0;
                 List<int> submitted = new List<int>();
@@ -47,6 +48,7 @@ namespace Adventure.Services
                     if ( response == null && TwitterMessage.CreatedAt.Date <= DateTime.Now.Date )
                     {
                         NewResponse( TwitterMessage, challenge.ChallengeId );
+                        DetermineContent();
                     }
                     else
                     {
@@ -54,6 +56,7 @@ namespace Adventure.Services
                     }
 
                 }
+                //If here is reached then they have not submitted a new challenge
             }
         }
 
@@ -80,6 +83,11 @@ namespace Adventure.Services
         }
 
         public static void TweetUnknown( string twitterUser )
+        {
+
+        }
+
+        public static void DetermineContent ()
         {
 
         }
