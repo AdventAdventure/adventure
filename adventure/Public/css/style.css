@@ -244,14 +244,12 @@ h2 {
 /* Ranking
 --------------------------------*/
 
-.ranking__position {
-	float: left;
-	background-color: rgba( 255, 255, 255, 0.5 );
-	width: 2em;
-	text-align: center;
-	height: 2em;
-	padding-top: 0.25em;
-	border-radius: 1em;
+.ranking {
+	font-size: 0.8em;
+}
+
+.ranking h1 {
+	padding-left: 1.5em;
 }
 
 .ranking__points {
@@ -262,6 +260,12 @@ h2 {
 	height: 2em;
 	padding-top: 0.25em;
 	border-radius: 1em;
+	margin-left: 1em
+}
+
+.ranking__position {
+	float: left;
+	padding-top: 0.1em;
 }
 
 .ranking__me {

@@ -79,7 +79,7 @@ var Adventure = (function () {
                     ];
 
                     $scope.positionClass = function (position) {
-                      var classes = "slab challenge";
+                      var classes = "slab ranking";
                       if (position === $scope.myPosition) {
                         classes += " ranking__me";
                       }
