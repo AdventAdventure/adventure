@@ -5,3 +5,4 @@ packages/
 obj/
 adventure/App_Data/Adventure.AdventureContext.mdf
 *.ldf
+node_modules
