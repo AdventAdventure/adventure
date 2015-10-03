@@ -20,8 +20,16 @@ namespace Adventure.Controllers
                         Challenges = new[]
                         {
                             new { Challenge = new
-                                    { Title = "Challenge for December " + n }
-                            }
+                                              {
+                                                  Title = "Challenge for December " + n,
+                                                  Hashtag = "#AdventureDay" + n
+                                              }
+                            },
+                            new {Challenge = new
+                                             {
+                                                 Title = "Bonus challenge for December " + n,
+                                                 Hashtag = "#AdventureDay" + n + "_Bonus1"
+                                             }}
                         }
                     })
             };
