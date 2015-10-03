@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using LinqToTwitter;
 
 namespace Adventure.Services
@@ -9,31 +9,21 @@ namespace Adventure.Services
     public class TwitterHashtagMonitor
     {
         private static IAuthorizer _authorizer;
-        private static IAuthorizer Authorizer
+        private static IAuthorizer Authorizer => _authorizer ?? (_authorizer = new MvcAuthorizer
         {
-            get
+            CredentialStore = new InMemoryCredentialStore
             {
-                if (_authorizer != null) return _authorizer;
-
-                var sessionStateCredentialStore = new SessionStateCredentialStore(HttpContext.Current.Session)
-                {
-                    ConsumerKey = Properties.Settings.Default.twitterConsumerKey,
-                    ConsumerSecret = Properties.Settings.Default.twitterConsumerSecret,
-                    OAuthToken = Properties.Settings.Default.twitterOAuthToken,
-                    OAuthTokenSecret = Properties.Settings.Default.twitterAccessTokenSecret
-                };
-                _authorizer = new MvcAuthorizer
-                {
-                    CredentialStore = sessionStateCredentialStore
-                };
-
-                return _authorizer;
+                ConsumerKey = Properties.Settings.Default.twitterConsumerKey,
+                ConsumerSecret = Properties.Settings.Default.twitterConsumerSecret,
+                OAuthToken = Properties.Settings.Default.twitterOAuthToken,
+                OAuthTokenSecret = Properties.Settings.Default.twitterAccessTokenSecret
             }
-        }
+        });
 
         public async Task Monitor()
         {
-            var search = string.Join(",", Enumerable.Range(1, 24).Select(d => "AdventHunt" + d));
+            var search = // "AFLGF," + 
+                string.Join(",", Enumerable.Range(1, 24).Select(d => "AdventHunt" + d));
 
             var twitterCtx = new TwitterContext(Authorizer);
             await
@@ -41,10 +31,39 @@ namespace Adventure.Services
                  where strm.Type == StreamingType.Filter &&
                        strm.Track == search
                  select strm)
-                .StartAsync(async strm =>
+                .StartAsync(async streamContent =>
                 {
-                    await Task.Run(() => Console.WriteLine(strm.Content + "\n"));
+                    await HandleTweetArrival(streamContent);
                 });
         }
+
+        private static async Task HandleTweetArrival(StreamContent streamContent)
+        {
+            var status = streamContent?.Entity as Status;
+
+            if (status == null)
+                return;
+
+            var tweet = new Tweet
+            {
+                TwitterUserIdentifier = status.User.UserIDResponse,
+                ScreenName = status.User.ScreenNameResponse,
+                UserName = status.User.Name,
+                HashTags = status.Entities.HashTagEntities.Select(h => h.Tag),
+                Text = status.Text,
+                TimeStamp = status.CreatedAt
+            };
+            await Task.Yield();
+        }
+    }
+
+    public class Tweet
+    {
+        public string TwitterUserIdentifier { get; set; }
+        public string ScreenName { get; set; }
+        public string UserName { get; set; }
+        public IEnumerable<string> HashTags { get; set; }
+        public string Text { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }
