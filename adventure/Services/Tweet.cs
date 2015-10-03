@@ -14,5 +14,6 @@ namespace Adventure.Services
         public DateTime TimeStamp { get; set; }
         public string TweetId { get; set; }
         public List<MediaEntity> Media { get; internal set; }
+        public IEnumerable<string> Urls { get; set; }
     }
 }
