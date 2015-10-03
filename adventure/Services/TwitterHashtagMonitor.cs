@@ -55,6 +55,7 @@ namespace Adventure.Services
                 Text = status.Text,
                 TimeStamp = status.CreatedAt
             };
+            TweetParser.main( tweet );
             await Task.Yield();
         }
 

@@ -9,87 +9,92 @@ namespace Adventure.Services
 {
     public static class TweetParser
     {
-        public static void main()
+        public static void main( Tweet TwitterMessage )
         {
-            var TwitterMessage = new LinqToTwitter.Status();
-            if ( !( TwitterMessage.RetweetedStatus == null ) | ( TwitterMessage.PossiblySensitive = false ) )
+            var twitterUser = TwitterMessage.TwitterUserIdentifier;
+            var hashtags = TwitterMessage.HashTags;
+            if ( hashtags.Any( h => !h.Contains( "submit" ) ) )
             {
-                var twitterUser = TwitterMessage.User.UserIDResponse;
-                var hashtags = ParseHashtags( TwitterMessage.Text );
-                if ( hashtags.Any( h => !h.Value.Contains( "#submit" ) ) )
-                {
-                    //Not a submission
-                    return; /////<---- FIX
-                }
-                int i = 0;
-                List<int> submitted = new List<int>();
-                foreach ( Match m in hashtags )
-                {
-                    int day = int.Parse( Regex.Split( m.Value, "(#adventadventureday)((?:[0-9]*))" )[1] );
-                    var adventureContext = new AdventureContext();
-                    var challenge = adventureContext.Challenges
-                        .Where( c => c.ChallengeNumber == day )
-                        .FirstOrDefault();
-                    if ( challenge == null )
-                    {
-                        TweetUnknown( twitterUser );
-                        break;
-                    }
-                    var user = adventureContext.Users
-                        .Where( r => r.TwitterId == twitterUser )
-                        .FirstOrDefault();
-                    if ( user == null )
-                    {
-                        NewUser( twitterUser );
-                    }
-                    var response = adventureContext.Responses
-                        .Where( r => r.ChallengeId == challenge.ChallengeId & r.UserId == int.Parse( twitterUser ) )
-                        .FirstOrDefault();
-                    if ( response == null && TwitterMessage.CreatedAt.Date <= DateTime.Now.Date )
-                    {
-                        NewResponse( TwitterMessage, challenge.ChallengeId );
-                        DetermineContent();
-                    }
-                    else
-                    {
-                        i++;
-                    }
-
-                }
-                //If here is reached then they have not submitted a new challenge
+                //Not a submission
+                return; /////<---- FIX
             }
+            List<int> submitted = new List<int>();
+            foreach ( var hashtag in hashtags )
+            {
+                int day = int.Parse( Regex.Split( hashtag, "(AdventHunt)((?:[0-9]+))" )[1] );
+                var adventureContext = new AdventureContext();
+                var challenge = adventureContext.Challenges
+                    .Where( c => c.ChallengeNumber == day )
+                    .FirstOrDefault();
+                if ( challenge == null )
+                {
+                    TweetUnknown( twitterUser );
+                    break;
+                }
+                var user = adventureContext.Users
+                    .Where( r => r.TwitterId == twitterUser )
+                    .FirstOrDefault();
+                if ( user == null )
+                {
+                    user = NewUser( TwitterMessage );
+                }
+                var response = adventureContext.Responses
+                    .Where( r => r.ChallengeId == challenge.ChallengeId & r.UserId == user.UserId )
+                    .FirstOrDefault();
+                if ( response == null && TwitterMessage.TimeStamp.Date <= DateTime.Now.Date )
+                {
+                    NewResponse( TwitterMessage, challenge );
+                    DetermineContent();
+                }
+                else
+                {
+                    //Already submitted or submitted out of date bound
+                }
+            }
+            //If here is reached then they have not submitted a new challenge
         }
 
-        public static Models.User NewUser( string twitterUser )
+    public static Models.User NewUser( Tweet TwitterMessage )
+    {
+        var newUser = new Models.User
         {
-            var newUser = new Models.User();
-            var adventureContext = new AdventureContext();
-            adventureContext.Users.Add( newUser );
-            return newUser;
-        }
-
-        public static Models.Response NewResponse( LinqToTwitter.Status twitterMessage, int challengeId )
-        {
-            var response = new Models.Response();
-            return response;
-        }
-
-        public static Match[] ParseHashtags( string s )
-        {
-            Match[] hashtags = Regex.Matches( s, "(#)((?:[A-Za-z0-9-_]*))" )
-                       .Cast<Match>()
-                       .ToArray();
-            return hashtags;
-        }
-
-        public static void TweetUnknown( string twitterUser )
-        {
-
-        }
-
-        public static void DetermineContent ()
-        {
-
-        }
+            TwitterId = TwitterMessage.TwitterUserIdentifier,
+            UserName = TwitterMessage.UserName
+        };
+        var adventureContext = new AdventureContext();
+        adventureContext.Users.Add( newUser );
+        return newUser;
     }
+
+    public static Models.Response NewResponse( Tweet tweet, Models.Challenge challenge )
+    {
+        var user = new AdventureContext().Users
+            .Where( u => u.TwitterId == tweet.TwitterUserIdentifier )
+            .FirstOrDefault();
+        var response = new Models.Response
+        {
+            UserId = user.UserId,
+            Tweet = tweet.Text,
+            TweetId = tweet.TweetId,
+            ChallengeId = challenge.ChallengeId
+        };
+        return response;
+    }
+        
+    public static void TweetUnknown( string twitterUser )
+    {
+        // Change our account
+        TweetUser( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should." );
+    }
+
+    public static void DetermineContent()
+    {
+
+    }
+
+    public static void TweetUser( string message )
+    {
+
+    }
+}
 }
