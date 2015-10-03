@@ -9,16 +9,22 @@ namespace Adventure.Services
         private static IAuthorizer _authorizer;
         private TwitterContext _twitterContext;
 
-        private static IAuthorizer Authorizer => _authorizer ?? (_authorizer = new MvcAuthorizer
+        private static IAuthorizer Authorizer 
         {
-            CredentialStore = new InMemoryCredentialStore
+            get
             {
-                ConsumerKey = Properties.Settings.Default.twitterConsumerKey,
-                ConsumerSecret = Properties.Settings.Default.twitterConsumerSecret,
-                OAuthToken = Properties.Settings.Default.twitterOAuthToken,
-                OAuthTokenSecret = Properties.Settings.Default.twitterAccessTokenSecret
+                return _authorizer ?? (_authorizer = new MvcAuthorizer
+                {
+                    CredentialStore = new InMemoryCredentialStore
+                    {
+                        ConsumerKey = Properties.Settings.Default.twitterConsumerKey,
+                        ConsumerSecret = Properties.Settings.Default.twitterConsumerSecret,
+                        OAuthToken = Properties.Settings.Default.twitterOAuthToken,
+                        OAuthTokenSecret = Properties.Settings.Default.twitterAccessTokenSecret
+                    }
+                });
             }
-        });
+        }
 
         public async Task Monitor()
         {
@@ -39,7 +45,10 @@ namespace Adventure.Services
 
         private static async Task HandleTweetArrival(StreamContent streamContent)
         {
-            var status = streamContent?.Entity as Status;
+            if (streamContent == null)
+                return;
+
+            var status = streamContent.Entity as Status;
 
             if (status == null)
                 return;
@@ -50,6 +59,7 @@ namespace Adventure.Services
                 ScreenName = status.User.ScreenNameResponse,
                 UserName = status.User.Name,
                 HashTags = status.Entities.HashTagEntities.Select(h => h.Tag),
+                Urls = status.Entities.UrlEntities.Select(x => x.Url),
                 Text = status.Text,
                 TimeStamp = status.CreatedAt,
                 TweetId = status.ID.ToString(),
