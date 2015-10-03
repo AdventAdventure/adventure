@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using LinqToTwitter;
 
@@ -53,7 +51,8 @@ namespace Adventure.Services
                 UserName = status.User.Name,
                 HashTags = status.Entities.HashTagEntities.Select(h => h.Tag),
                 Text = status.Text,
-                TimeStamp = status.CreatedAt
+                TimeStamp = status.CreatedAt,
+                TweetId = status.ID.ToString()
             };
             await Task.Yield();
         }
@@ -62,15 +61,5 @@ namespace Adventure.Services
         {
             _twitterContext.Streaming.Last().CloseStream();
         }
-    }
-
-    public class Tweet
-    {
-        public string TwitterUserIdentifier { get; set; }
-        public string ScreenName { get; set; }
-        public string UserName { get; set; }
-        public IEnumerable<string> HashTags { get; set; }
-        public string Text { get; set; }
-        public DateTime TimeStamp { get; set; }
     }
 }
