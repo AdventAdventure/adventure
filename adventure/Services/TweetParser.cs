@@ -42,7 +42,7 @@ namespace Adventure.Services
                 if (response == null)
                 {
                     NewResponse(adventureContext, twitterMessage, challenge);
- //                   DetermineContent(twitterMessage, challenge);
+                    // DetermineContent(twitterMessage, challenge);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Adventure.Services
             return challenge;
         }
 
-        private static bool IsSubmitHashtagMissing(List<string> hashtags)
+        public static bool IsSubmitHashtagMissing(List<string> hashtags)
         {
             return !hashtags.Any(h => h.ToLower() == "submit");
         }
@@ -124,7 +124,7 @@ namespace Adventure.Services
             TweetUser(twitterUser, "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.");
         }
 
-        private static void DetermineContent(Tweet tweet, Challenge challenge)
+        public static void DetermineContent(Tweet tweet, Challenge challenge)
         {
             var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             // Is image?
