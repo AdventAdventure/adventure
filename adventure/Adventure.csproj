@@ -189,6 +189,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\TwitterHashtagMonitor.cs" />
+    <Compile Include="Services\TweetParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="day\1.html" />
