@@ -105,6 +105,12 @@ h3 {
 	margin: 0 0 1rem;
 }
 
+h1 a,
+h2 a,
+h3 a {
+	color: #FFF;
+}
+
 h1 {
 	font-size: 2em;
 }
@@ -142,9 +148,10 @@ h2 {
 }
 
 .main-nav ul {
-	width: 100%;
+	table-layout: fixed;
 	display: table;
 	height: 100%;
+	width: 100%;
 }
 
 .main-nav li {
