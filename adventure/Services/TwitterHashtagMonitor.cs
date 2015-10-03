@@ -59,6 +59,7 @@ namespace Adventure.Services
                 ScreenName = status.User.ScreenNameResponse,
                 UserName = status.User.Name,
                 HashTags = status.Entities.HashTagEntities.Select(h => h.Tag),
+                Urls = status.Entities.UrlEntities.Select(x => x.Url),
                 Text = status.Text,
                 TimeStamp = status.CreatedAt,
                 TweetId = status.ID.ToString()
