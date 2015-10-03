@@ -5,7 +5,7 @@ var Adventure = (function () {
 
     return {
         Init: function () {
-            
+
             ajax_url = "Test/data.json";
 
             if (location.href.indexOf("apphb") >= 0)
@@ -46,7 +46,6 @@ var Adventure = (function () {
                 Rankings: function ( $urlRouter ) {
 
                     this.params = $urlRouter;
-
                 },
 
                 Badges: function ( $urlRouter ) {
@@ -70,28 +69,28 @@ var Adventure = (function () {
                 $stateProvider
                     .state('days', {
                         url: "/days",
-                        templateUrl: 'public/templates/days.html',
+                        templateUrl: 'Public/templates/days.html',
                         controller: Adventure.Angular.Controller.Days
                     })
                     .state('day', {
                         url: "/day/{day_id}",
-                        templateUrl: 'public/templates/day.html',
+                        templateUrl: 'Public/templates/day.html',
                         controller: Adventure.Angular.Controller.Day,
                         controllerAs: 'day'
                     })
                     .state('rankings', {
                         url: "/rankings",
-                        templateUrl: 'public/templates/rankings.html',
+                        templateUrl: 'Public/templates/rankings.html',
                         controller: Adventure.Angular.Controller.Rankings
                     })
                     .state('badges', {
                         url: "/badges",
-                        templateUrl: 'public/templates/badges.html',
+                        templateUrl: 'Public/templates/badges.html',
                         controller: Adventure.Angular.Controller.Badges
                     })
                     .state('index', {
                         url: '/',
-                        templateUrl: 'public/templates/main.html',
+                        templateUrl: 'Public/templates/main.html',
                         controller: Adventure.Angular.Controller.Main,
                     });
 
@@ -122,7 +121,7 @@ var Adventure = (function () {
             },
 
             Process: function ( response ) {
-                
+
                 var dayno = 0,
                     day_id = response.Days[dayno].Day,
                     num_chals = response.Days[dayno].Challenges.length,
@@ -136,7 +135,7 @@ var Adventure = (function () {
         },
 
         ProcessDates: function ( dates ) {
-            
+
             var days = dates.Days,
                 pastDates = [],
                 today = parseInt( new Date().getDate() );
