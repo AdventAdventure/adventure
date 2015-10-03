@@ -17,45 +17,22 @@ namespace Adventure.Controllers
             using (var db = new AdventureContext())
             {
                 if (!db.Challenges.Any())
-
                 {
-                    var days = new
-                                 {
-                                     Days = Enumerable
-                                         .Range(1, 24)
-                                         .Select(n => new
-                                                      {
-                                                          Day = n,
-                                                          Challenges = new[]
-                                                                       {
-                                                                           new
-                                                                           {
-                                                                               Challenge = new Challenge
-                                                                                           {
-                                                                                               Name =
-                                                                                                   "Challenge for November " +
-                                                                                                   n,
-                                                                                               ChallengeNumber = n
-                                                                                           }
-                                                                           },
-                                                                           new
-                                                                           {
-                                                                               Challenge = new Challenge
-                                                                                           {
-                                                                                               Name =
-                                                                                                   "Bonus challenge for December " +
-                                                                                                   n,
-                                                                                               ChallengeNumber = n
-                                                                                           }
-                                                                           }
-                                                                       }
-                                                      })
-                                 };
+                    var days = Enumerable
+                        .Range(1, 24)
+                        .Select(n => new
+                        {
+                            Day = n,
+                            Challenge = new Challenge
+                            {
+                                Name = "Challenge for November " + n,
+                                ChallengeNumber = n
+                            }
+                        });
 
-                    foreach (var day in days.Days)
+                    foreach (var day in days)
                     {
-                        db.Challenges.Add(day.Challenges.First().Challenge);
-                        db.Challenges.Add(day.Challenges.Last().Challenge);
+                        db.Challenges.Add(day.Challenge);
                     }
                     db.SaveChanges();
                 }
