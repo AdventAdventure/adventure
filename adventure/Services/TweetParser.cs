@@ -11,7 +11,7 @@ namespace Adventure.Services
     {
         public static async Task Main(Tweet twitterMessage)
         {
-            var twitterUser = twitterMessage.TwitterUserIdentifier;
+            var twitterUser = twitterMessage.TweetId_num;
             var hashtags = twitterMessage.HashTags.ToList();
             if (IsSubmitHashtagMissing(hashtags))
             {
@@ -33,39 +33,41 @@ namespace Adventure.Services
                 var challenge = GetChallengeForDay(adventureContext, day);
                 if (challenge == null)
                 {
-                    TweetUnknown(twitterUser);
+                    await TwitterResponder.SendTweetReply( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser );
                     return;
                 }
 
-                var user = GetUser(adventureContext, twitterUser) ?? NewUser(twitterMessage);
+                var user = GetUser(adventureContext, twitterMessage.TweetId) ?? NewUser(twitterMessage);
 
-                var response = GetResponse(adventureContext, challenge, user);
-                if (response == null)
+                var previouslyComplete = CheckChallengeComplete(adventureContext, challenge, user);
+                if ( previouslyComplete == false)
                 {
                     NewResponse(adventureContext, twitterMessage, challenge);
-                    // DetermineContent(twitterMessage, challenge);
+                    DetermineContent(twitterMessage, challenge);
                 }
                 else
                 {
-                    TweetUser(twitterUser,
-                        "Wow! You're enthusiastic! Looks like you've already completed that challenge.");
+                    await TwitterResponder.SendTweetReply( "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser );
 
                     if (twitterMessage.TimeStamp.Date > DateTime.Now.Date) return;
 
                     var dayDifference = (DateTime.Now.Date - twitterMessage.TimeStamp.Date).Days;
-                    TweetUser(twitterUser,
-                        "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
-                        dayDifference + " days!");
+                    await TwitterResponder.SendTweetReply( "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
+                        dayDifference + " days!", twitterUser );
                 }
             }
             //If here is reached then they have not submitted a new challenge
         }
 
-        private static Response GetResponse(AdventureContext adventureContext, Challenge challenge, User user)
+        private static bool CheckChallengeComplete( AdventureContext adventureContext, Challenge challenge, User user)
         {
-            var response = adventureContext.Responses
-                .FirstOrDefault(r => r.ChallengeId == challenge.ChallengeId & r.UserId == user.UserId);
-            return response;
+            bool IsComplete = false;
+                if ( adventureContext.UserChallenges
+                .Where(u => u.ChallengeId == challenge.ChallengeId && u.UserId == user.UserId && u.IsComplete).Count() >= 1 )
+            {
+                IsComplete = true;
+            }
+            return IsComplete;
         }
 
         private static User GetUser(AdventureContext adventureContext, string twitterUser)
@@ -118,12 +120,6 @@ namespace Adventure.Services
             adventureContext.SaveChanges();
 
             VerifyBadges(user.UserId);
-        }
-
-        private static void TweetUnknown(string twitterUser)
-        {
-            // Change our account!!!
-            TweetUser(twitterUser, "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.");
         }
 
         public static void DetermineContent(Tweet tweet, Challenge challenge)
