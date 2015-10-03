@@ -114,6 +114,8 @@ namespace Adventure.Services
             };
             adventureContext.Responses.Add(response);
             adventureContext.SaveChanges();
+
+            VerifyBadges(user.UserId);
         }
 
         private static void TweetUnknown(string twitterUser)
@@ -168,7 +170,6 @@ namespace Adventure.Services
             return strippedTweet;
         }
 
-
         private static void SendResponse(Tweet tweet, Challenge challenge)
         {
             throw new NotImplementedException();
@@ -177,6 +178,69 @@ namespace Adventure.Services
         public static void TweetUser(string username, string message)
         {
             throw new NotImplementedException();
+        }
+
+        private static void VerifyBadges(int userId)
+        {
+            using (var context = new AdventureContext())
+            {
+                VerifyBadgeFirstParticipation(context, userId);
+                VerifyBadgeFirstByType(context, userId, BadgeCodes.Audio);
+                VerifyBadgeFirstByType(context, userId, BadgeCodes.Video);
+                VerifyBadgeFirstByType(context, userId, BadgeCodes.Image);
+                context.SaveChanges();
+            }
+        }
+
+        private static void VerifyBadgeFirstParticipation(AdventureContext context, int userId)
+        {
+            var badgeCount = (from b in context.Badges
+                              from ub in context.UserBadges.Where(x => x.UserId == userId)
+                              where b.Code == BadgeCodes.FirstParticipation.ToString()
+                              select b);
+
+            if (context.Responses.Count(x => x.UserId == userId) == 1 && badgeCount.Count() == 0)
+            {
+                var badge = context.Badges.First(x => x.Code == BadgeCodes.FirstParticipation.ToString());
+
+                if (badge != null)
+                {
+                    context.UserBadges.Add(new UserBadge
+                    {
+                        BadgeId = badge.BadgeId,
+                        UserId = userId
+                    });
+                }
+            }
+        }
+
+        private static void VerifyBadgeFirstByType(AdventureContext context, int userId, BadgeCodes code)
+        {
+            var result = (from r in context.Responses
+                          from c in context.Challenges.Where(x => x.ChallengeId == r.ChallengeId)
+                          where r.UserId == userId
+                          where c.Type == code.ToString()
+                          select r);
+
+            var badgeCount = (from ub in context.UserBadges
+                              from b in context.Badges.Where(x => x.BadgeId == ub.BadgeId)
+                              where ub.UserId == userId
+                              where b.Code == code.ToString()
+                              select b);
+
+            if (result.Count() == 1 && badgeCount.Count() == 0)
+            {
+                var badge = context.Badges.First(x => x.Code == code.ToString());
+
+                if (badge != null)
+                {
+                    context.UserBadges.Add(new UserBadge
+                    {
+                        BadgeId = badge.BadgeId,
+                        UserId = userId
+                    });
+                }
+            }
         }
     }
 }
