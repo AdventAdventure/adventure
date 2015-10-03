@@ -203,7 +203,6 @@
     <Compile Include="Services\TweetParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="day\1.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Properties\Settings.settings">
