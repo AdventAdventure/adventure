@@ -44,9 +44,6 @@ namespace Adventure.Services
                 .StartAsync(async strm =>
                 {
                     await Task.Run(() => Console.WriteLine(strm.Content + "\n"));
-
-                    if (count++ >= 5)
-                        strm.CloseStream();
                 });
         }
     }
