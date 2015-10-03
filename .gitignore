@@ -7,3 +7,4 @@ adventure/App_Data/Adventure.AdventureContext.mdf
 *.ldf
 node_modules
 adventure/Adventure.v2.ncrunchproject
+*.cache
