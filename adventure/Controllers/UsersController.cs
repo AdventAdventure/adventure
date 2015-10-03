@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using Adventure.Migrations;
 
 namespace Adventure.Controllers
 {
@@ -20,7 +21,7 @@ namespace Adventure.Controllers
                 }
                 else
                 {
-                    var user = db.Users.FirstOrDefault(u => u.UserName == userName);
+                    var user = db.Users.FirstOrDefault(u => u.ScreenName == userName);
                     if (user == null) return Request.CreateResponse(HttpStatusCode.OK, (object) null);
 
                     var responses = db.Responses
@@ -35,7 +36,7 @@ namespace Adventure.Controllers
                              {
                                  User = user,
                                  Responses = responses,
-                                 Challenges = challenges
+                                 Challenges = challenges,
                              };
                 }
             }
@@ -57,7 +58,8 @@ namespace Adventure.Controllers
         private static object List(AdventureContext db)
         {
             object result;
-            var users = db.Users.Select(user => new {Name = user.UserName, Id = user.TwitterId})
+            var users = db.Users
+                .Select(user => new {Name = user.UserName, Id = user.TwitterId, ScreenName = user.ScreenName})
                 .ToArray();
             if (users.Any())
             {
