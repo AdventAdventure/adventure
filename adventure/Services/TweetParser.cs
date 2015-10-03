@@ -96,15 +96,6 @@ namespace Adventure.Services
             TweetUser( twitterUser, "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should." );
         }
 
-        public static string StripContent( Tweet tweet )
-        {
-            Regex removeMentions = new Regex( @"/(^|\b)@\S*($|\b)/" );
-            Regex removeHashtags = new Regex( @"/(^|\b)#\S*($|\b)/" );
-            string strippedTweet = removeMentions.Replace( tweet.Text, "" );
-            strippedTweet = removeHashtags.Replace( strippedTweet, "" );
-            return strippedTweet;
-        }
-
         public static void DetermineContent( Tweet tweet, Models.Challenge challenge )
         {
             Regex linkParser = new Regex( @"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase );
@@ -114,16 +105,42 @@ namespace Adventure.Services
                 SendResponse( tweet, challenge );
             }
             // Is URL?
-            else if (linkParser.IsMatch(StripContent( tweet )) == true)
+            else if ( tweet.Urls.Count() >= 1)
             {
                 Regex youtubeTest = new Regex( "(https?://)?(www\\.)?(yotu\\.be/|youtube\\.com/)?((.+/)?(watch(\\?v=|.+&v=))?(v=)?)([\\w_-]{11})(&.+)?" );
-                Regex instagramTest = new Regex( @"http://instagr\.?am(?:\.com)?/\S*" );
+                Regex instagramTest = new Regex( @"http://instagr\.?am(?:\.com)?/\S*");
+                Regex vineTest = new Regex( @"https://vine.co/v/\w*$@i" );
+                Regex soundcloudTest = new Regex( @"(https?://)?(www\\.)?( soundcloud.com | snd.sc )(.)" );
+
+                if ( youtubeTest.IsMatch(tweet.Urls.Any().ToString()) == true && (challenge.Type.ToLower() == "video" | challenge.Type.ToLower() == "audio" ) )
+                {
+                    SendResponse( tweet, challenge );
+                }
+                if ( instagramTest.IsMatch( tweet.Urls.Any().ToString() ) == true && challenge.Type.ToLower() == "image" )
+                {
+                    SendResponse( tweet, challenge );
+                }
+                if ( vineTest.IsMatch( tweet.Urls.Any().ToString() ) == true && challenge.Type.ToLower() == "video" )
+                {
+                    SendResponse( tweet, challenge );
+                }
+
             }
             // Is text response
             else {
                 string strippedTweet = StripContent( tweet );
             }
         }
+
+        public static string StripContent( Tweet tweet )
+        {
+            Regex removeMentions = new Regex( @"/(^|\b)@\S*($|\b)/" );
+            Regex removeHashtags = new Regex( @"/(^|\b)#\S*($|\b)/" );
+            string strippedTweet = removeMentions.Replace( tweet.Text, "" );
+            strippedTweet = removeHashtags.Replace( strippedTweet, "" );
+            return strippedTweet;
+        }
+        
 
         private static void SendResponse( Tweet tweet, Challenge challenge )
         {
