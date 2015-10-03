@@ -11,5 +11,6 @@ namespace Adventure
         public DbSet<Response> Responses { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserBadge> UserBadges { get; set; }
+        public DbSet<UserChallenge> UserChallenges { get; set; }
     }
 }

@@ -1,0 +1,9 @@
+diff a/adventure/Services/TweetParser.cs b/adventure/Services/TweetParser.cs	(rejected hunks)
+@@ -179,6 +179,7 @@
+ +        private static void SendResponse(Tweet tweet, Challenge challenge)
+ +=======
+          public static void TweetUser( string username, string message )
+++>>>>>>> Stashed changes
+          {
+              throw new NotImplementedException();
+          }
