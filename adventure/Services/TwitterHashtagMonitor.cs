@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using LinqToTwitter;
 
 namespace Adventure.Services
@@ -14,7 +15,7 @@ namespace Adventure.Services
             {
                 if (_authorizer != null) return _authorizer;
 
-                var sessionStateCredentialStore = new SessionStateCredentialStore
+                var sessionStateCredentialStore = new SessionStateCredentialStore(HttpContext.Current.Session)
                 {
                     ConsumerKey = Properties.Settings.Default.twitterConsumerKey,
                     ConsumerSecret = Properties.Settings.Default.twitterConsumerSecret,
