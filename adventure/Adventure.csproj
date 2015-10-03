@@ -165,6 +165,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\_references.js" />
+    <Content Include="Test\data.json" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
