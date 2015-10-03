@@ -1,4 +1,8 @@
-<section class="slab challenge">
-	<h1 class="slab__title"><a href="/#/day/1">Day 1 - Angels</a></h1>
-	<a ui-sref="days" class="button">View all days</a>
-</section>
+<div class="advent-calendar clear">
+	<article class="challenge challenge--home challenge--{{day.ilk}}" ng-repeat="day in days">
+		<a href="/#/day/{{day.Day}}">
+			<h2 class="slab__title">Day {{day.Day}} - {{day.Challenge.Hashtag}}</h2>
+			<h3 class="challenge__title"><strong>Task:</strong> {{day.Challenge.Title}}</h3>
+		</a>
+	</article>
+</div>

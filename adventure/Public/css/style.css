@@ -64,6 +64,7 @@ th {
 --------------------------------*/
 
 body {
+	padding-bottom: 4.5rem;
 	background: #3C4C60;
 	color: #515151;
 	font: 300 16px /1.5 'Josefin Sans', sans-serif;
@@ -93,6 +94,13 @@ a {
 	margin-right: auto;
 	margin-left: auto;
 	max-width: 62rem;
+}
+
+.clear:before,
+.clear:after {
+	content: '';
+	display: table;
+	clear: both;
 }
 
 /* Typography
@@ -261,6 +269,40 @@ h2 {
 	padding-top: 0.25em;
 	border-radius: 1em;
 	margin-left: 1em
+}
+
+/* Home
+--------------------------------*/
+
+.advent-calendar {
+	font-size: 0;
+}
+
+.challenge--home {
+	width: 25%;
+	float: left;
+}
+
+.challenge--home a {
+	text-align: center;
+	font-size: 1rem;
+	padding: 2rem 0.5rem;
+	color: #FFF;
+	display: block;
+}
+
+.challenge--bonus {
+	display: none;
+}
+
+.challenge--home h2 {
+	font-size: 1.25em;
+	margin: 0 0 0.5rem;
+}
+
+.challenge--home h3 {
+	font-size: 1.125em;
+	margin: 0 0 0.5rem;
 }
 
 .ranking__position {
