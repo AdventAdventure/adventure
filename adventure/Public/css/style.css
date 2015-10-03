@@ -1,0 +1,244 @@
+/* Reset
+--------------------------------*/
+
+body {
+	margin: 0;
+}
+
+blockquote,
+pre,
+dl,
+dd,
+ol,
+ul,
+form,
+fieldset,
+legend,
+figure,
+table,
+th,
+td,
+caption,
+hr {
+	padding: 0;
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+	height: auto;
+}
+
+ol, ul, li {
+	list-style: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+
+*,
+*:before,
+*:after{
+	box-sizing: border-box;
+}
+
+th {
+	text-align: left;
+	table-layout: fixed;
+}
+
+/* Global
+--------------------------------*/
+
+body {
+	background: #3C4C60;
+	color: #515151;
+	font: 300 16px /1.5 'Josefin Sans', sans-serif;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+	-moz-osx-font-smoothing: grayscale;
+	 -webkit-font-smoothing: antialiased;
+}
+
+.center {
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+	color: #3C4C60;
+}
+
+/* Grid
+--------------------------------*/
+
+.slab,
+.wrap {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 62rem;
+}
+
+/* Typography
+--------------------------------*/
+
+h1,
+h2,
+h3 {
+	font-family: 'Josefin Slab', sans-serif;
+	margin: 0 0 1rem;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.8em;
+}
+
+/* Header
+--------------------------------*/
+
+[role="banner"] {
+	padding-bottom: 1rem;
+	font-family: 'Josefin Slab', sans-serif;
+	padding-top: 1rem;
+	font-size: 1.25em;
+}
+
+[role="banner"] a {
+	color: #FFF;
+}
+
+/*
+--------------------------------*/
+
+.main-nav {
+	text-align: center;
+	text-transform: uppercase;
+	background: rgba( 255, 255, 255, 0.8 );
+	position: fixed;
+	height: 3.5rem;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+}
+
+.main-nav ul {
+	width: 100%;
+	display: table;
+	height: 100%;
+}
+
+.main-nav li {
+	display: table-cell;
+}
+
+.main-nav li + li {
+	border-left: 1px solid #CCC;
+}
+
+.main-nav a {
+	transition: 300ms color;
+	line-height: 1.4;
+	text-align: center;
+	display: block;
+	height: 3.5rem;
+	padding: 0.4rem 0 0;
+	font-size: 0.875em;
+	color: #666;
+}
+
+.main-nav a img {
+	transition: 300ms all;
+	opacity: 0.5;
+}
+
+.main-nav a:hover {
+	color: #333;
+}
+
+.main-nav a:hover img {
+	opacity: 1;
+}
+
+.main-nav img {
+	display: inline-block;
+	width: 18px;
+}
+
+/* Forms
+--------------------------------*/
+
+.button {
+	box-shadow: 3px 3px 0 0 #4C5868;
+	cursor: pointer;
+	padding: 0.8rem 1.5rem;
+	display: inline-block;
+	margin: 1rem 1rem 1.5rem 0;
+	background: #3C4C60;
+	width: auto;
+	text-align: center;
+	color: #FFF;
+	font: 400 1em 'Josefin Slab', sans-serif;
+}
+
+.button.tweet {
+	background: #19B5FE;
+	box-shadow: 3px 3px 0 0 #447890;
+}
+
+.button + .button {
+	margin-top: 0;
+}
+
+/* Slab
+--------------------------------*/
+
+.slab {
+	margin-bottom: 1.5rem;
+	box-shadow: 7px 7px 0 0 rgba( 255, 255, 255, 0.05 );
+	padding-top: 1.25rem;
+	padding-bottom: 1.25rem;
+	position: relative;
+	background: rgba( 255, 255, 255, 0.1 );
+	color: #FFF;
+}
+
+.slab :last-child {
+	margin-bottom: 0;
+}
+
+/* Challenge
+--------------------------------*/
+
+.challenge__title {
+	font-size: 1.25em;1
+}
+
+
+
+
+
+
+
+
+
+
