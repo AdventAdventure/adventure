@@ -13,7 +13,7 @@ namespace Adventure.Controllers
         // GET api/days
         public HttpResponseMessage Get()
         {
-            Dictionary<int, IEnumerable<Challenge>> challenges;
+            IEnumerable<object> challenges;
             using (var db = new AdventureContext())
             {
                 if (!db.Challenges.Any())
@@ -38,8 +38,13 @@ namespace Adventure.Controllers
                 }
                 challenges = db.Challenges
                     .ToList()
-                    .GroupBy(d => d.ChallengeNumber)
-                    .ToDictionary(g => g.Key, g => g.Select(c => c));
+                    .OrderBy(d => d.ChallengeNumber)
+                    .Select(c => 
+                        (object) new 
+                        {
+                            Day = c.ChallengeNumber,
+                            Challenge = c
+                        });
             }
             return Request.CreateResponse(HttpStatusCode.OK, challenges, new JsonMediaTypeFormatter());
         }
