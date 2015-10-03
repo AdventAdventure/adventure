@@ -180,9 +180,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510031817113_Badges.cs" />
+    <Compile Include="Migrations\201510031817113_Badges.Designer.cs">
+      <DependentUpon>201510031817113_Badges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserBadge.cs" />
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Ranking.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Migrations\201510031619400_InitialCreate.cs" />
+    <Compile Include="Migrations\201510031619400_InitialCreate.Designer.cs">
+      <DependentUpon>201510031619400_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510031717059_Migration1.cs" />
+    <Compile Include="Migrations\201510031717059_Migration1.Designer.cs">
+      <DependentUpon>201510031717059_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Challenge.cs" />
@@ -222,10 +236,20 @@
     <Content Include="Test\*.*" />
     <Content Include="Public\*.*" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510031619400_InitialCreate.resx">
+      <DependentUpon>201510031619400_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510031717059_Migration1.resx">
+      <DependentUpon>201510031717059_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510031817113_Badges.resx">
+      <DependentUpon>201510031817113_Badges.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

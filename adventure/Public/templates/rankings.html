@@ -1,0 +1,8 @@
+<section
+  ng-class="positionClass(position)"
+  ng-repeat="(position, ranking) in rankings | orderBy:'-Points'"
+  ng-show="rankingVisible(position)">
+  	<h2 class="ranking__points">{{ ranking.Points }}</h2>
+    <h2 class="ranking__position">{{ position + 1 }}.</h2>
+    <h1 class="slab__title">{{ ranking.UserName }}</h1>
+</section>

@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
+using Adventure.Models;
 
 namespace Adventure.Controllers
 {
@@ -10,30 +13,58 @@ namespace Adventure.Controllers
         // GET api/days
         public HttpResponseMessage Get()
         {
-            var result = new
+            Dictionary<int, IEnumerable<Challenge>> challenges;
+            using (var db = new AdventureContext())
             {
-                Days = Enumerable
-                    .Range(1, 24)
-                    .Select(n => new
+                if (!db.Challenges.Any())
+
+                {
+                    var days = new
+                                 {
+                                     Days = Enumerable
+                                         .Range(1, 24)
+                                         .Select(n => new
+                                                      {
+                                                          Day = n,
+                                                          Challenges = new[]
+                                                                       {
+                                                                           new
+                                                                           {
+                                                                               Challenge = new Challenge
+                                                                                           {
+                                                                                               Name =
+                                                                                                   "Challenge for November " +
+                                                                                                   n,
+                                                                                               ChallengeNumber = n
+                                                                                           }
+                                                                           },
+                                                                           new
+                                                                           {
+                                                                               Challenge = new Challenge
+                                                                                           {
+                                                                                               Name =
+                                                                                                   "Bonus challenge for December " +
+                                                                                                   n,
+                                                                                               ChallengeNumber = n
+                                                                                           }
+                                                                           }
+                                                                       }
+                                                      })
+                                 };
+
+                    foreach (var day in days.Days)
                     {
-                        Day = n,
-                        Challenges = new[]
-                        {
-                            new { Challenge = new
-                                              {
-                                                  Title = "Challenge for November " + n,
-                                                  Hashtag = "#AdventureDay" + n
-                                              }
-                            },
-                            new {Challenge = new
-                                             {
-                                                 Title = "Bonus challenge for December " + n,
-                                                 Hashtag = "#AdventureDay" + n + "_Bonus1"
-                                             }}
-                        }
-                    })
-            };
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+                        db.Challenges.Add(day.Challenges.First().Challenge);
+                        db.Challenges.Add(day.Challenges.Last().Challenge);
+                    }
+                    db.SaveChanges();
+                }
+                challenges = db.Challenges
+                    .ToList()
+                    .GroupBy(d => d.ChallengeNumber)
+                    .ToDictionary(g => g.Key, g => g.Select(c => c));
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, challenges, new JsonMediaTypeFormatter());
         }
     }
 }

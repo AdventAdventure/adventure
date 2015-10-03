@@ -10,5 +10,6 @@ namespace Adventure.Models
         public virtual string Name { get; set; }
         public virtual bool Bonus { get; set; }
         public virtual int? Value { get; set; }
+        public virtual string Type { get; set; }
     }
 }

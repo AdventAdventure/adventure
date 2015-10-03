@@ -5,7 +5,7 @@ var Adventure = (function () {
 
     return {
         Init: function () {
-            
+
             ajax_url = "Test/data.json";
 
             if (location.href.indexOf("apphb") >= 0)
@@ -23,9 +23,10 @@ var Adventure = (function () {
 
                 },
 
-                Day: function ( $routeParams ) {
+                Day: function ( $urlRouter ) {
 
-                    this.params = $routeParams;
+                    console.log( 'b' );
+                    this.params = $urlRouter;
 
                 },
 
@@ -42,10 +43,55 @@ var Adventure = (function () {
 
                 },
 
-                Rankings: function ( $urlRouter ) {
+                Rankings: function ( $scope, $urlRouter ) {
 
                     this.params = $urlRouter;
 
+                    $scope.myPosition = 25;
+                    $scope.rankings = [
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                    ];
+
+                    $scope.positionClass = function (position) {
+                      var classes = "slab ranking";
+                      if (position === $scope.myPosition) {
+                        classes += " ranking__me";
+                      }
+
+                      return classes;
+                    }
+
+                    $scope.rankingVisible = function (position) {
+                      var topTen = position < 10;
+                      var nearMe = Math.abs(position - $scope.myPosition) < 4;
+                      return topTen || nearMe;
+                    }
                 },
 
                 Badges: function ( $urlRouter ) {
@@ -64,37 +110,33 @@ var Adventure = (function () {
 
             Router: function ( $stateProvider, $urlRouterProvider ) {
 
-                $urlRouterProvider.otherwise( '/404' );
+                // $urlRouterProvider.otherwise( '/404' );
 
                 $stateProvider
                     .state('days', {
                         url: "/days",
-                        templateUrl: 'public/templates/days.html',
+                        templateUrl: 'Public/templates/days.html',
                         controller: Adventure.Angular.Controller.Days
                     })
-                    .state('404', {
-                        url: "/404",
-                        templateUrl: 'public/templates/404.html',
-                        controller: Adventure.Angular.Controller.FourOhFour
-                    })
-                    .state('day.day_id', {
-                        url: "/day/day_id",
-                        templateUrl: 'public/templates/day.html',
-                        controller: Adventure.Angular.Controller.Day
+                    .state('day', {
+                        url: "/day/{day_id}",
+                        templateUrl: 'Public/templates/day.html',
+                        controller: Adventure.Angular.Controller.Day,
+                        controllerAs: 'day'
                     })
                     .state('rankings', {
                         url: "/rankings",
-                        templateUrl: 'public/templates/rankings.html',
+                        templateUrl: 'Public/templates/rankings.html',
                         controller: Adventure.Angular.Controller.Rankings
                     })
                     .state('badges', {
                         url: "/badges",
-                        templateUrl: 'public/templates/badges.html',
+                        templateUrl: 'Public/templates/badges.html',
                         controller: Adventure.Angular.Controller.Badges
                     })
                     .state('index', {
                         url: '/',
-                        templateUrl: 'public/templates/main.html',
+                        templateUrl: 'Public/templates/main.html',
                         controller: Adventure.Angular.Controller.Main,
                     });
 
@@ -125,7 +167,7 @@ var Adventure = (function () {
             },
 
             Process: function ( response ) {
-                
+
                 var dayno = 0,
                     day_id = response.Days[dayno].Day,
                     num_chals = response.Days[dayno].Challenges.length,
@@ -139,7 +181,7 @@ var Adventure = (function () {
         },
 
         ProcessDates: function ( dates ) {
-            
+
             var days = dates.Days,
                 pastDates = [],
                 today = parseInt( new Date().getDate() );
@@ -158,8 +200,6 @@ var Adventure = (function () {
 }());
 
 var app = angular.module( 'adventure', [ 'ui.router' ] );
-
-app.controller('dayController', ['$routeParams', Adventure.Angular.Controller.Day ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', Adventure.Angular.Router ]);
 

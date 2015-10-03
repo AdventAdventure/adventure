@@ -11,11 +11,11 @@ namespace Adventure.Models
     {
         public int BadgeId { get; set; }
         public string Name { get; set; }
-        public BadgeCodes Code { get; set; }
+        public /*BadgeCodes*/string Code { get; set; }
     }
 
-    public enum BadgeCodes
+    /*public enum BadgeCodes
     {
         FirstParticipation
-    }
+    }*/
 }

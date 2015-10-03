@@ -29,7 +29,7 @@ namespace Adventure.Controllers
         {
             if (context.Responses.Count(x => x.UserId == userId) == 1)
             {
-                var badge = context.Badges.First(x => x.Code == BadgeCodes.FirstParticipation);
+                /*var badge = context.Badges.First(x => x.Code == BadgeCodes.FirstParticipation);
 
                 if (badge != null)
                 {
@@ -38,7 +38,7 @@ namespace Adventure.Controllers
                             BadgeId = badge.BadgeId,
                             UserId = userId
                         });
-                }
+                }*/
             }
         }
     }
