@@ -1,6 +1,6 @@
 <section class="slab challenge" ng-repeat="day in days">
-	<h1 class="slab__title"><a href="/#/day/1">Day {{day.Day}} - Angels</a></h1>
-	<h2 class="challenge__title"><strong>Task:</strong> Take a photo of a bauble.</h2>
+	<h1 class="slab__title"><a href="/#/day/{{day.Day}}/{{day.challenge_id}}">Day {{day.Day}} - {{day.Challenge.Hashtag}}</a></h1>
+	<h2 class="challenge__title"><strong>Task:</strong> {{day.Challenge.Title}}</h2>
 	<a href="#" class="button tweet">Tweet your entry</a>
-	<a ui-sref="days" class="button">View all entries</a>
+	<a href="/#/day/{{day.Day}}/entries" class="button">View all entries</a>
 </section>

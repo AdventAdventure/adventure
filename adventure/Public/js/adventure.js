@@ -17,16 +17,116 @@ var Adventure = (function () {
 
             Controller: {
 
-                Main: function ( $scope ) {
+                Main: function ( $scope, $q ) {
 
-                    // console.log( $scope );
+                    $scope.days = [];
+                    var challenges = [],
+                        challenge;
+
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
+                        if ( dayslist !== undefined ) {
+                            dayslist = dayslist.Days;
+                            for (var i = 0; i < dayslist.length; i++) {
+                                for (var j = 0; j < dayslist[ i ].Challenges.length; j++) {
+                                    challenge = dayslist[ i ].Challenges[ j ];
+                                    challenge.Day = dayslist[ i ].Day;
+                                    challenge.challenge_id = j;
+                                    challenge.ilk = challenge.Challenge.Hashtag.toLowerCase().indexOf("bonus") >= 0 ? 'bonus' : 'standard';
+                                    challenges.push( challenge );
+                                }
+                            }
+                            $scope.days = challenges;
+                        }
+                    });
 
                 },
 
-                Day: function ( $urlRouter ) {
+                Day: function ( $scope, $q, $state ) {
 
-                    console.log( 'b' );
-                    this.params = $urlRouter;
+                    this.params = $state.params;
+                    var day_id = this.params.day_id,
+                        challenge_id = this.params.challenge_id !== undefined && this.params.challenge_id ? parseInt( this.params.challenge_id ) : 0,
+                        challenge,
+                        day;
+
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
+                        if ( dayslist !== undefined ) {
+                            dayslist = Adventure.ProcessDates( dayslist );
+
+                            for (var i = 0; i < dayslist.length; i++) {
+                                if ( dayslist[ i ].Day == day_id ) {
+                                    day = dayslist[ i ];
+
+                                    if ( day.Challenges[ challenge_id ] !== undefined ) {
+                                        challenge = day.Challenges[ challenge_id ];
+                                        challenge.Day = day_id;
+                                        $scope.day = challenge;
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                },
+
+                DayEntries: function ( $scope, $q, $state ) {
+
+                    this.params = $state.params;
+                    var day_id = this.params.day_id,
+                        challenge_id = this.params.challenge_id !== undefined && this.params.challenge_id ? parseInt( this.params.challenge_id ) : 0,
+                        challenge,
+                        day;
+
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
+                        if ( dayslist !== undefined ) {
+                            dayslist = Adventure.ProcessDates( dayslist );
+
+                            for (var i = 0; i < dayslist.length; i++) {
+                                if ( dayslist[ i ].Day == day_id ) {
+                                    day = dayslist[ i ];
+
+                                    if ( day.Challenges[ challenge_id ] !== undefined ) {
+                                        challenge = day.Challenges[ challenge_id ];
+                                        challenge.Day = day_id;
+                                        $scope.day = challenge;
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                },
+
+                DayDetails: function ( $scope, $q, $state ) {
+
+                    this.params = $state.params;
+                    var content_id = this.params.content_id,
+                        challenge,
+                        day;
+
+                    $scope.the_content = '';
+
+                    $.get( 'public/content/' + content_id + '.html' ).then(function( response ) {
+                        $( '.slab--content' ).html( response );
+                    });
+
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
+                        if ( dayslist !== undefined ) {
+                            dayslist = Adventure.ProcessDates( dayslist );
+
+                            for (var i = 0; i < dayslist.length; i++) {
+                                if ( dayslist[ i ].Day == content_id ) {
+
+                                    day = dayslist[ i ];
+                                    if ( day.Challenges[ 0 ] !== undefined ) {
+                                        day.Challenge = day.Challenges[ 0 ];
+                                    }
+
+                                    $scope.day = day;
+                                }
+                            }
+                        }
+                    });
 
                 },
 
@@ -118,10 +218,22 @@ var Adventure = (function () {
                         templateUrl: 'Public/templates/days.html',
                         controller: Adventure.Angular.Controller.Days
                     })
+                    .state('day/:content_id', {
+                        url: "/day/{content_id}/details",
+                        templateUrl: 'public/templates/day-details.html',
+                        controller: Adventure.Angular.Controller.DayDetails,
+                        controllerAs: 'day'
+                    })
                     .state('day', {
                         url: "/day/{day_id}",
                         templateUrl: 'Public/templates/day.html',
                         controller: Adventure.Angular.Controller.Day,
+                        controllerAs: 'day'
+                    })
+                    .state('day/:day_id', {
+                        url: "/day/{day_id}/entries",
+                        templateUrl: 'public/templates/day-entries.html',
+                        controller: Adventure.Angular.Controller.DayEntries,
                         controllerAs: 'day'
                     })
                     .state('rankings', {
@@ -175,7 +287,7 @@ var Adventure = (function () {
                     chal_title = response.Days[dayno].Challenges[0].Challenge.Title;
 
                 console.log("JSON loaded....");
-                console.log("Day: "+day_id+ " Num Challenges: "+num_chals+ " "+chal_title);
+                console.log("Day: " + day_id + " Num Challenges: " + num_chals + " " + chal_title);
             }
 
         },

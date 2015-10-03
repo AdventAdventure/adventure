@@ -62,7 +62,7 @@ namespace Adventure.Services
                 Urls = status.Entities.UrlEntities.Select(x => x.Url),
                 Text = status.Text,
                 TimeStamp = status.CreatedAt,
-                TweetId = status.ID.ToString(),
+                TweetId = status.StatusID.ToString(),
                 Media = status.Entities.MediaEntities
             };
             TweetParser.Main( tweet );
