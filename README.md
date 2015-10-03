@@ -2,8 +2,9 @@
 
 ## Getting Started (Frontend)
 
-This should work on anything with Python installed:
+```
+npm install -g http-server
+http-server adventure
+```
 
-`python -m SimpleHTTPServer`
-
-And connect to http://localhost:8000/
+And connect to http://localhost:8080/
