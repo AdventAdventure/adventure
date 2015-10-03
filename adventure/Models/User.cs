@@ -8,5 +8,6 @@ namespace Adventure.Models
         public virtual int UserId { get; set; }
         public virtual string UserName { get; set; }
         public virtual string TwitterId { get; set; }
+        public virtual string ScreenName { get; set; }
     }
 }

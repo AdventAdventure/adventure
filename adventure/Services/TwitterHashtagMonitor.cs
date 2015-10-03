@@ -9,7 +9,7 @@ namespace Adventure.Services
         private static IAuthorizer _authorizer;
         private TwitterContext _twitterContext;
 
-        private static IAuthorizer Authorizer 
+        public static IAuthorizer Authorizer 
         {
             get
             {

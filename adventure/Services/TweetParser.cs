@@ -92,7 +92,8 @@ namespace Adventure.Services
             var newUser = new User
             {
                 TwitterId = twitterMessage.TwitterUserIdentifier,
-                UserName = twitterMessage.UserName
+                UserName = twitterMessage.UserName,
+                ScreenName = twitterMessage.ScreenName
             };
             var adventureContext = new AdventureContext();
             adventureContext.Users.Add(newUser);

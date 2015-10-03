@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201510031817113_Badges.Designer.cs">
       <DependentUpon>201510031817113_Badges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510032202500_ScreenName.cs" />
+    <Compile Include="Migrations\201510032202500_ScreenName.Designer.cs">
+      <DependentUpon>201510032202500_ScreenName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserBadge.cs" />
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Ranking.cs" />
@@ -248,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510031817113_Badges.resx">
       <DependentUpon>201510031817113_Badges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510032202500_ScreenName.resx">
+      <DependentUpon>201510032202500_ScreenName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
