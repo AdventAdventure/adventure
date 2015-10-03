@@ -167,6 +167,7 @@
   <ItemGroup>
     <Content Include="Scripts\*.*" />
     <Content Include="Test\*.*" />
+    <Content Include="Test\data.json" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
