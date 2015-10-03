@@ -6,6 +6,6 @@ namespace Adventure.Models
     public class User
     {
         public virtual int UserId { get; set; }
-        public virtual string UserTwitterName { get; set; }
+        public virtual string UserName { get; set; }
     }
 }
