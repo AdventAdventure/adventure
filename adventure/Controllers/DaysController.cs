@@ -1,10 +1,21 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Adventure.Services;
 
 namespace Adventure.Controllers
 {
+    public class MonitorController : ApiController
+    {
+        [HttpGet]
+        public async Task<HttpResponseMessage> Get()
+        {
+            await new TwitterHashtagMonitor().Monitor();
+            return Request.CreateResponse(HttpStatusCode.OK, "started");
+        }
+    }
     public class DaysController : ApiController
     {
         // GET api/days

@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Adventure.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="twitterConsumerKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ItfqGAO6utFD0W6eFDSnAFosF</Value>
+    </Setting>
+    <Setting Name="twitterConsumerSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">yt5ZLxr4f6tywe3bcCwk4kn2FkClykFQJd07fYoSPy16rZellk</Value>
+    </Setting>
+    <Setting Name="twitterOAuthToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">3850606157-g8cWYCeFJ9oKMpMRNTyDsUhys2U9BF7sVQAtBv8</Value>
+    </Setting>
+    <Setting Name="twitterAccessTokenSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">RHecNOWlfU8fkVSbu6x6EFRaOZsyAAMbAyiiVV8e7Sye8</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
