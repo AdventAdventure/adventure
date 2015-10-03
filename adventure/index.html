@@ -1,55 +1,45 @@
 <!DOCTYPE html>
-<html lang="en-gb">
+<html lang="en-gb" ng-app="adventure">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="initial-scale=1.0" />
 		<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 		<title></title>
-		<script src="Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
 		<base href="/" />
 		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300|Josefin+Slab:300" rel="stylesheet" type="text/css">
-		<link href="public/css/style.css" media="all" rel="stylesheet" />
+		<link href="Public/css/style.css" media="all" rel="stylesheet" />
 	</head>
-	<body ng-controller="adventureRouter">
+	<body>
 		<header role="banner">
 			<div class="wrap">
-				<a href="/" class="logo">Advent Adventure</a>
+				<a ui-sref="index" class="logo">Advent Adventure</a>
 			</div>
 		</header>
 
 		<nav class="main-nav">
 			<ul>
 				<li>
-					<a href="/rankings"><img src="public/images/Podium.svg" /><br />Rankings</a>
+					<a ui-sref="ranking"><img src="public/images/Podium.svg" /><br />Rankings</a>
 				</li>
 				<li>
-					<a href="/days"><img src="public/images/Calendar.svg" /><br />Days</a>
+					<a ui-sref="days"><img src="public/images/Calendar.svg" /><br />Days</a>
 				</li>
 				<li>
-					<a href="/badges"><img src="public/images/Badge.svg" /><br />Badges</a>
+					<a ui-sref="badges"><img src="public/images/Badge.svg" /><br />Badges</a>
 				</li>
 			</ul>
 		</nav>
 
-		<main role="main" ng-view>
-
-			<section class="slab challenge">
-				<h1 class="slab__title"><a href="/day/1">Day 1 - Angels</a></h1>
-				<h2 class="challenge__title"><strong>Task:</strong> Take a photo of a bauble.</h2>
-				<a href="#" class="button tweet">Tweet your entry</a>
-				<a href="#" class="button">View all entries</a>
-			</section>
-
-		</main>
+		<main role="main" ui-view></main>
 
 		<footer role="contentinfo">
 
 		</footer>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
-		<script src="public/js/adventure.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+		<script src="Public/js/adventure.js"></script>
 		
 	</body>
 </html>
