@@ -9,6 +9,8 @@ namespace Adventure.Services
     public class TwitterHashtagMonitor
     {
         private static IAuthorizer _authorizer;
+        private TwitterContext _twitterContext;
+
         private static IAuthorizer Authorizer => _authorizer ?? (_authorizer = new MvcAuthorizer
         {
             CredentialStore = new InMemoryCredentialStore
@@ -25,9 +27,9 @@ namespace Adventure.Services
             var search = // "AFLGF," + 
                 string.Join(",", Enumerable.Range(1, 24).Select(d => "AdventHunt" + d));
 
-            var twitterCtx = new TwitterContext(Authorizer);
+            _twitterContext = new TwitterContext(Authorizer);
             await
-                (from strm in twitterCtx.Streaming
+                (from strm in _twitterContext.Streaming
                  where strm.Type == StreamingType.Filter &&
                        strm.Track == search
                  select strm)
@@ -54,6 +56,11 @@ namespace Adventure.Services
                 TimeStamp = status.CreatedAt
             };
             await Task.Yield();
+        }
+
+        public void Close()
+        {
+            _twitterContext.Streaming.Last().CloseStream();
         }
     }
 
