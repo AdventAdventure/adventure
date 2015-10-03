@@ -52,7 +52,8 @@ namespace Adventure.Services
                 HashTags = status.Entities.HashTagEntities.Select(h => h.Tag),
                 Text = status.Text,
                 TimeStamp = status.CreatedAt,
-                TweetId = status.ID.ToString()
+                TweetId = status.ID.ToString(),
+                Media = status.Entities.MediaEntities
             };
             TweetParser.main( tweet );
             await Task.Yield();

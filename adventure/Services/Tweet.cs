@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LinqToTwitter;
 
 namespace Adventure.Services
 {
@@ -12,5 +13,6 @@ namespace Adventure.Services
         public string Text { get; set; }
         public DateTime TimeStamp { get; set; }
         public string TweetId { get; set; }
+        public List<MediaEntity> Media { get; internal set; }
     }
 }
