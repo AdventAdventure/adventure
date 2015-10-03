@@ -133,6 +133,7 @@
     <Folder Include="Areas\" />
     <Folder Include="Content\" />
     <Folder Include="fonts\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -162,10 +163,10 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\*.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\*.*" />
     <Content Include="Test\*.*" />
-    <Content Include="Scripts\_references.js" />
-    <Content Include="Test\data.json" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
