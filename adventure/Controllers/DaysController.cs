@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace Adventure.Controllers
@@ -33,7 +34,7 @@ namespace Adventure.Controllers
                         }
                     })
             };
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            return Request.CreateResponse(HttpStatusCode.OK, result, new JsonMediaTypeFormatter());
         }
     }
 }
