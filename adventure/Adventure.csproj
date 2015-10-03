@@ -152,7 +152,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Test\data.json" />
     <Content Include="day\1.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
