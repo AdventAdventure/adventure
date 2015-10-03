@@ -9,14 +9,14 @@ namespace Adventure.Services
 {
     public static class TweetParser
     {
-        public static void main( Tweet TwitterMessage )
+        public static void Main( Tweet TwitterMessage )
         {
             var twitterUser = TwitterMessage.TwitterUserIdentifier;
-            var hashtags = TwitterMessage.HashTags;
-            if ( hashtags.Any( h => !h.Contains( "submit" ) ) )
+            var hashtags = TwitterMessage.HashTags.ToList();
+            if ( !hashtags.Any( h => h.ToLower() == "submit" ) )
             {
                 // Not a submission
-                return; /////<---- FIX
+                return; 
             }
             List<int> submitted = new List<int>();
             foreach ( var hashtag in hashtags )

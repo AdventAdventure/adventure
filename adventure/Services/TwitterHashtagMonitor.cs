@@ -65,7 +65,7 @@ namespace Adventure.Services
                 TweetId = status.ID.ToString(),
                 Media = status.Entities.MediaEntities
             };
-            TweetParser.main( tweet );
+            TweetParser.Main( tweet );
             await Task.Yield();
         }
 
