@@ -43,9 +43,55 @@ var Adventure = (function () {
 
                 },
 
-                Rankings: function ( $urlRouter ) {
+                Rankings: function ( $scope, $urlRouter ) {
 
                     this.params = $urlRouter;
+
+                    $scope.myPosition = 25;
+                    $scope.rankings = [
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                      {"UserName":"Gus","Points":120},
+                      {"UserName":"John","Points":99},
+                      {"UserName": "Fireman Sam Long Name","Points":1},
+                    ];
+
+                    $scope.positionClass = function (position) {
+                      var classes = "slab challenge";
+                      if (position === $scope.myPosition) {
+                        classes += " ranking__me";
+                      }
+
+                      return classes;
+                    }
+
+                    $scope.rankingVisible = function (position) {
+                      var topTen = position < 10;
+                      var nearMe = Math.abs(position - $scope.myPosition) < 4;
+                      return topTen || nearMe;
+                    }
                 },
 
                 Badges: function ( $urlRouter ) {

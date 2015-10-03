@@ -69,7 +69,7 @@ body {
 	font: 300 16px /1.5 'Josefin Sans', sans-serif;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 	-moz-osx-font-smoothing: grayscale;
 	 -webkit-font-smoothing: antialiased;
 }
@@ -241,12 +241,29 @@ h2 {
 	font-size: 1.25em;1
 }
 
+/* Ranking
+--------------------------------*/
 
+.ranking__position {
+	float: left;
+	background-color: rgba( 255, 255, 255, 0.5 );
+	width: 2em;
+	text-align: center;
+	height: 2em;
+	padding-top: 0.25em;
+	border-radius: 1em;
+}
 
+.ranking__points {
+	float: right;
+	background-color: rgba( 255, 255, 255, 0.5 );
+	width: 2em;
+	text-align: center;
+	height: 2em;
+	padding-top: 0.25em;
+	border-radius: 1em;
+}
 
-
-
-
-
-
-
+.ranking__me {
+	background-color: rgba( 255, 255, 255, 0.3 );
+}
