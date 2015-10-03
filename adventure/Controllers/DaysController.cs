@@ -21,7 +21,7 @@ namespace Adventure.Controllers
                         {
                             new { Challenge = new
                                               {
-                                                  Title = "Challenge for December " + n,
+                                                  Title = "Challenge for November " + n,
                                                   Hashtag = "#AdventureDay" + n
                                               }
                             },
