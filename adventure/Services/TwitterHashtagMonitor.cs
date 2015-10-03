@@ -33,12 +33,13 @@ namespace Adventure.Services
 
         public async Task Monitor()
         {
+            var search = string.Join(",", Enumerable.Range(1, 24).Select(d => "AdventHunt" + d));
             var count = 0;
             var twitterCtx = new TwitterContext(Authorizer);
             await
                 (from strm in twitterCtx.Streaming
                  where strm.Type == StreamingType.Filter &&
-                       strm.Track == "twitter"
+                       strm.Track == search
                  select strm)
                 .StartAsync(async strm =>
                 {
