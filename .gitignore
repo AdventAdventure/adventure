@@ -3,3 +3,5 @@
 bin/
 packages/
 obj/
+adventure/App_Data/Adventure.AdventureContext.mdf
+*.ldf
