@@ -134,6 +134,8 @@
     <Folder Include="Content\" />
     <Folder Include="fonts\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Test\" />
+    <Folder Include="Public\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -168,6 +170,7 @@
   <ItemGroup>
     <Content Include="Scripts\*.*" />
     <Content Include="Test\*.*" />
+    <Content Include="Public\*.*" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
