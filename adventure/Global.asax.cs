@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity;
+
+using Adventure.Models;
 
 namespace Adventure
 {
@@ -19,5 +22,11 @@ namespace Adventure
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+    }
+
+    public class AdventureContext : DbContext
+    {
+        public DbSet<Day> Days { get; set; }
+        public DbSet<Challenge> Challenges { get; set; }
     }
 }
