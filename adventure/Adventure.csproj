@@ -236,7 +236,10 @@
   <ItemGroup>
     <Content Include="Scripts\*.*" />
     <Content Include="Test\*.*" />
+    <Content Include="Content\*.*" />
     <Content Include="Public\*.*" />
+    <Content Include="Details\*\*.*" />
+    <Content Include="More\*\*.*" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
