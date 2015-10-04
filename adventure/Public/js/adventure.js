@@ -191,40 +191,55 @@ var Adventure = (function () {
 
                 },
 
-                Rankings: function ( $scope, $urlRouter ) {
+                Rankings: function ( $scope, $q, $urlRouter ) {
 
                     this.params = $urlRouter;
 
-                    $scope.myPosition = 25;
-                    $scope.rankings = [
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                    ];
+                    Adventure.Ajax.Retrieve('http://adventure-1.apphb.com/api/ranking/get', $q).then(function (rankings) {
+                        var leaderboard = [];
+
+                        $scope.rankings = [];
+                        for (var i = 0; i < rankings.Positions.length; i++) {
+                            leaderboard.push({
+                                UserName: rankings.Positions[i].UserName,
+                                Points: rankings.Positions[i].Points,
+                            });
+                        }
+                        $scope.rankings = leaderboard;
+
+                    });
+
+
+                    $scope.myPosition = 1;
+                    //$scope.rankings = [
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //];
 
                     $scope.positionClass = function (position) {
                       var classes = "slab ranking";
