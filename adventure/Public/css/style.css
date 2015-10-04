@@ -402,6 +402,7 @@ body {
 	background: #9F242F;
 	content: '';
 	position: absolute;
+	cursor: pointer;
 	z-index: 1;
 	height: 50%;
 	width: 100%;
