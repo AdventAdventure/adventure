@@ -138,10 +138,9 @@ var Adventure = (function () {
                     $scope.user = null;
 
                     var service = twitterService.isReady();
-
                     if ( service ) {
                         service.me().done(function (result) {
-                            user_id = result.id;
+                            user_id = result.alias;
 
                             Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
                                 if ( user !== undefined ) {
