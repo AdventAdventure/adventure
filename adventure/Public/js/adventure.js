@@ -12,8 +12,10 @@ var Adventure = (function () {
                 ajax_url = "http://adventure-1.apphb.com/api/days";
 
             if ( location.href === 'http://adventure-1.apphb.com/' ) {
-                console.log( location.href = 'http://adventure-1.apphb.com/#/' );
+                location.href = 'http://adventure-1.apphb.com/#/';
             }
+
+            $( '.advent-calendar' ).doubleTapToGo();
 
         },
 
@@ -62,6 +64,10 @@ var Adventure = (function () {
                         datatype: 'image/jpg',
                         success: function (data) {
                             $scope.background = 'background-image: url(/public/content/images/' + day_id + '.jpg);';
+                            window.setTimeout(function () {
+                                $scope.background = 'background-image: url(/public/content/images/' + day_id + '.jpg);';
+                                $( '.day-header' ).css( 'background-image', 'url(/public/content/images/' + day_id + '.jpg' );
+                            }, 500);
                         }
                      });
 
@@ -159,10 +165,18 @@ var Adventure = (function () {
                 Days: function ( $scope, $q ) {
 
                     $scope.days = [];
-                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
-                        if ( dayslist !== undefined ) {
-                            dayslist = Adventure.ProcessDates( dayslist );
-                            $scope.days = dayslist;
+                    var allDates = [],
+                        today = parseInt( new Date().getDate() );
+
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dates ) {
+                        if ( dates !== undefined ) {
+                            for (var i = 0; i < dates.length; i++) {
+                                if ( today >= dates[ i ].Challenge.ChallengeNumber ) {
+                                    dates[ i ].available = true;
+                                }
+                                allDates.push( dates[ i ] );
+                            }
+                            $scope.days = allDates;
                         }
                     });
 
@@ -184,11 +198,13 @@ var Adventure = (function () {
 
                     var user_id = Adventure.GetCookie( 'adventureTwitter' );
                     $scope.user = null;
+                    console.log( user_id );
 
                     if ( user_id ) {
                         Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
                             if ( user !== undefined ) {
                                 $scope.user = user;
+                                console.log( $scope.user );
                             }
                         });
                     }
@@ -241,8 +257,9 @@ var Adventure = (function () {
                         '', 'pin', 'bells', 'gingerbread', 'trophy', 'star', 'cane', 'world'
                     ];
 
-                    if ( user_id ) {                  
-                        Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                    if ( user_id ) {
+                        // 'http://adventure-1.apphb.com/api/user/' + user_id 
+                        Adventure.Ajax.Retrieve( '/Test/user.json', $q ).then( function( user ) {
                             if ( user !== undefined ) {
                                 var badges = [],
                                     i;
@@ -260,7 +277,10 @@ var Adventure = (function () {
                                 $scope.user = user;
                             }
                         });
+
                     }
+                    
+                    console.log( $scope.user );
 
                 },
 
@@ -298,8 +318,8 @@ var Adventure = (function () {
                         controller: Adventure.Angular.Controller.DayEntries,
                         controllerAs: 'day'
                     })
-                    .state('rankings', {
-                        url: "/rankings",
+                    .state('leaderboard', {
+                        url: "/leaderboard",
                         templateUrl: 'Public/templates/rankings.html',
                         controller: Adventure.Angular.Controller.Rankings
                     })
@@ -369,17 +389,17 @@ var Adventure = (function () {
 
         ProcessDates: function ( dates ) {
 
-            var pastDates = [],
-                today = parseInt( new Date().getDate() );
+            // var pastDates = [],
+            //     today = parseInt( new Date().getDate() );
 
-            if ( dates !== undefined ) {
-                for (var i = 0; i < dates.length; i++) {
-                    if ( today >= dates[ i ].Challenge.ChallengeNumber ) {
-                        pastDates.push( dates[ i ] );
-                    }
-                }
-            }
-            return pastDates;
+            // if ( dates !== undefined ) {
+            //     for (var i = 0; i < dates.length; i++) {
+            //         if ( today >= dates[ i ].Challenge.ChallengeNumber ) {
+            //             pastDates.push( dates[ i ] );
+            //         }
+            //     }
+            // }
+            return dates;
         },
 
         Twitter: {
@@ -393,11 +413,11 @@ var Adventure = (function () {
                     if ( cookie ) {
                         return cookie;
                     } else {
-                        OAuth.popup('twitter', {cache:true} )
+                        OAuth.popup('twitter', {cache:false} )
                             .done( function ( result ) {
                                 result.me()
                                     .done( function ( response ) {
-                                        document.cookie = 'adventureTwitter=Har 10t;expires=Fri, 25 Dec 2015 23:59:59 GMT';
+                                        document.cookie = 'adventureTwitter=' + result.alias + ';expires=Fri, 25 Dec 2015 23:59:59 GMT';
                                         $state.go($state.current, {}, {reload: true});
                                     });
                             });
@@ -405,7 +425,11 @@ var Adventure = (function () {
                 };
 
                 $scope.SignOut = function() {
-                    twitterService.clearCache();
+                    OAuth.clearCache( 'twitter' );
+                    Adventure.KillCookie( 'adventureTwitter' );
+                    console.log( 'a' );
+                    $state.go('index', {}, {reload: true});
+                    console.log( 'b' );
                 };
 
                 if (twitterService.isReady()) {
