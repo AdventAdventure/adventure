@@ -37,7 +37,7 @@ namespace Adventure.Services
                     return;
                 }
 
-                var user = GetUser( adventureContext, twitterMessage.TwitterUserIdentifier ) ?? NewUser( twitterMessage );
+                var user = GetUser( adventureContext, twitterMessage.TweetId ) ?? NewUser( twitterMessage );
 
                 var previouslyComplete = CheckChallengeComplete( adventureContext, challenge, user );
                 if ( previouslyComplete == false )
@@ -107,7 +107,7 @@ namespace Adventure.Services
         private static void NewResponse( AdventureContext adventureContext, Tweet tweet, Challenge challenge )
         {
             var user = adventureContext.Users
-                .First( u => u.TwitterId == tweet.TwitterUserIdentifier );
+                .Single( u => u.TwitterId == tweet.TwitterUserIdentifier );
 
             var response = new Response
             {
@@ -118,18 +118,15 @@ namespace Adventure.Services
             };
             adventureContext.Responses.Add( response );
             adventureContext.SaveChanges();
-
-            VerifyBadges(adventureContext, user.UserId );
         }
 
-        public static void DetermineContent( Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext )
+
+        public static async void DetermineContent( Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext )
         {
-            if (challenge == null) return;
             // Is image?
             if ( !( tweet.Media.FirstOrDefault() == null ) && challenge.Type.ToLower() == "image" )
             {
-                SendResponse( tweet, challenge );
-                CompleteChallenge( challenge, user, adventureContext );
+                CompleteChallenge( challenge, user, tweet, adventureContext );
             }
             // Is URL?
             else if ( tweet.Urls.Any() )
@@ -141,41 +138,34 @@ namespace Adventure.Services
 
                 if ( youtubeTest.IsMatch( tweet.Urls.Any().ToString() ) && ( challenge.Type.ToLower() == "video" | challenge.Type.ToLower() == "audio" ) )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
-
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
                 }
                 if ( instagramTest.IsMatch( tweet.Urls.Any().ToString() ) && challenge.Type.ToLower() == "image" )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
 
                 }
                 if ( vineTest.IsMatch( tweet.Urls.Any().ToString() ) && challenge.Type.ToLower() == "video" )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
-
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
                 }
 
             }
             // Is text response
-            else if (challenge.Type != null && challenge.Type.ToLower()=="Text")
+            else if ( challenge.Type.ToLower() == "Text" )
             {
                 string strippedTweet = StripContent( tweet );
-                CompleteChallenge( challenge, user, adventureContext );
-            }
-            else
-            {
-                return;
+                CompleteChallenge( challenge, user, tweet, adventureContext );
             }
         }
 
-        public static void CompleteChallenge( Challenge challenge, User user, AdventureContext adventureContext )
+        public static void CompleteChallenge( Challenge challenge, User user, Tweet tweet, AdventureContext adventureContext )
         {
             var userChallenge = new UserChallenge { ChallengeId = challenge.ChallengeId, UserId = user.UserId, IsComplete = true };
             adventureContext.UserChallenges.Add( userChallenge );
             adventureContext.SaveChanges();
+            TwitterResponder.SendTweetReply( challenge.InfoResponse, tweet.TweetId_num );
+            VerifyBadges( user.UserId );
         }
 
         private static string StripContent( Tweet tweet )
@@ -187,23 +177,17 @@ namespace Adventure.Services
             return strippedTweet;
         }
 
-        private static void SendResponse( Tweet tweet, Challenge challenge )
-        {
-            throw new NotImplementedException();
-        }
 
-        public static void TweetUser( string username, string message )
+        private static void VerifyBadges( int userId )
         {
-            throw new NotImplementedException();
-        }
-
-        private static void VerifyBadges(AdventureContext context, int userId )
-        {
-            VerifyBadgeFirstParticipation(context, userId);
-            VerifyBadgeFirstByType(context, userId, BadgeCodes.Audio);
-            VerifyBadgeFirstByType(context, userId, BadgeCodes.Video);
-            VerifyBadgeFirstByType(context, userId, BadgeCodes.Image);
-            context.SaveChanges();
+            using ( var context = new AdventureContext() )
+            {
+                VerifyBadgeFirstParticipation( context, userId );
+                VerifyBadgeFirstByType( context, userId, BadgeCodes.Audio );
+                VerifyBadgeFirstByType( context, userId, BadgeCodes.Video );
+                VerifyBadgeFirstByType( context, userId, BadgeCodes.Image );
+                context.SaveChanges();
+            }
         }
 
         private static void VerifyBadgeFirstParticipation( AdventureContext context, int userId )
