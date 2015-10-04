@@ -28,7 +28,7 @@ namespace Adventure.Quartz
             // Associate a trigger with the Job
             var trigger = ( ICronTrigger ) TriggerBuilder.Create()
                 .WithIdentity( "ScheduleTweet", "ScheduledTweets" )
-                .WithCronSchedule( "0 0 9 1 / 1 * ? *" )
+                .WithCronSchedule( "0 0 6 1 / 1 * ? *" )
                 .StartAt( DateTime.UtcNow )
                 .WithPriority( 1 )
                 .Build();
