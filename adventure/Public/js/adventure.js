@@ -267,7 +267,7 @@ var Adventure = (function () {
                                 console.log( badges );
                                 if ( user.Badges !== undefined ) {
                                     for (i = 0; i < user.Badges.length; i++) {
-                                        user.Badges[ i ].suffix = user.Badges[ i ].Code + ( badges.indexOf( user.Badges[ i ].BadgeId ) == -1 ? '' : '-full' );
+                                        user.Badges[ i ].suffix = user.Badges[ i ].Code + ( badges.indexOf( user.Badges[ i ].BadgeId ) == -1 ? '-full' : '' );
                                     }
                                 }
                                 $scope.badges = badges;
