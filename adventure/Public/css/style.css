@@ -219,6 +219,10 @@ h2 {
 
 @media screen and ( min-width: 35em ) {
 
+	body {
+		padding-bottom: 0;
+	}
+
 	[role=banner] {
 		padding-top: 0.75rem;
 		padding-bottom: 0;
@@ -292,6 +296,10 @@ h2 {
 
 /* Slab
 --------------------------------*/
+
+body {
+	overflow-x: hidden;
+}
 
 @media screen and ( min-width: 30em ) {
 
@@ -370,14 +378,89 @@ h2 {
 }
 
 .challenge--home {
-	/*width: 25%;
-	float: left;*/
+	position: relative;
+	transition-delay: 1s;
+	transition: 300ms;
+	-webkit-perspective: 800px;
+	        perspective: 800px;
+}
+
+.challenge--home:before,
+.challenge--home:after {
+	-webkit-transform-style: preserve-3d;
+	        transform-style: preserve-3d;
+	-webkit-transform-origin: left top;
+	    -ms-transform-origin: left top;
+	        transform-origin: left top;
+	-webkit-transition: 300ms all;
+	transition: 600ms all;
+	background: #9F242F;
+	content: '';
+	position: absolute;
+	z-index: 1;
+	height: 50%;
+	width: 100%;
+	left: 0;
+	top: 0;
+}
+
+.challenge--home:after {
+	-webkit-transform-origin: right bottom;
+	    -ms-transform-origin: right bottom;
+	        transform-origin: right bottom;
+	left: auto;
+	top: auto;
+	bottom: 0;
+	border-top: 2px dashed rgba( 175, 52, 63, 0.5 );
+}
+
+.challenge--home:hover {
+	z-index: 10;
+}
+
+.challenge--home:hover:before,
+.challenge--home:hover:after {
+	background: #8F141F;
+}
+
+.challenge--home:hover:before {
+	-webkit-transform: rotateX( 130deg );
+			transform: rotateX( 130deg );
+}
+
+.challenge--home:hover:after {
+	-webkit-transform: rotateX( -130deg );
+			transform: rotateX( -130deg );
+}
+
+.challenge__date {
+	transition: 200ms all;
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+	color: #FFF;
+	z-index: 3;
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1;
+	opacity: 0.8;
+}
+
+.challenge--home:hover .challenge__date {
+	opacity: 0;
+	right: 0;
 }
 
 @media screen and ( min-width: 25em ) {
+
+	.advert-calendar {
+		overflow-x: hidden;
+	}
+
 	.challenge--home {
 		width: 50%;
 		float: left;
+		border-left: 2px solid rgba( 230, 85, 85, 0.2 );
 	}
 
 	.challenge.challenge--home:nth-child(2) {
@@ -387,6 +470,34 @@ h2 {
 	.challenge--home:nth-child(2n+1) {
 		clear: left;
 	}
+
+	.challenge--home:before,
+	.challenge--home:after {
+		height: 100%;
+		width: 50%;
+		top: 0;
+		bottom: auto;
+	}
+
+	.challenge--home:after {
+		-webkit-transform-origin: right bottom;
+		    -ms-transform-origin: right bottom;
+		        transform-origin: right bottom;
+		left: auto;
+		right: 0;
+		border-left: 2px dashed rgba( 175, 52, 63, 0.5 );
+		border-top: 0;
+	}
+
+	.challenge--home:hover:before {
+		-webkit-transform: rotateY( -150deg );
+				transform: rotateY( -150deg );
+	}
+
+	.challenge--home:hover:after {
+		-webkit-transform: rotateY( 150deg );
+				transform: rotateY( 150deg );
+	}
 }
 
 @media screen and ( min-width: 40em ) {
@@ -395,7 +506,7 @@ h2 {
 		float: left;
 	}
 
-	.challenge--home:nth-child(3) {
+	.challenge.challenge--home:nth-child(3) {
 		border-top: none;
 	}
 
@@ -414,7 +525,7 @@ h2 {
 		float: left;
 	}
 
-	.challenge--home:nth-child(4) {
+	.challenge.challenge--home:nth-child(4) {
 		border-top: none;
 	}
 
@@ -432,7 +543,7 @@ h2 {
 }
 
 .challenge--home + .challenge--home {
-	border-top: 1px solid rgba( 230, 85, 85, 0.2 );
+	border-top: 2px solid rgba( 230, 85, 85, 0.2 );
 }
 
 .challenge--home a {
