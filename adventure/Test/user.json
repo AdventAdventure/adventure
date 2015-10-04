@@ -1,0 +1,48 @@
+{
+    "User": {
+        "UserId": 1,
+        "UserName": "Har 10t",
+        "TwitterId": "871769268",
+        "ScreenName": "har10t"
+    },
+    "Responses": [{
+        "ResponseId": 1,
+        "UserId": 1,
+        "Tweet": "#AdventHunt1 #submit Regular old dude",
+        "TweetId": "650453899862802432",
+        "ChallengeId": 1
+    }],
+    "Challenges": [{
+        "ChallengeId": 1,
+        "ChallengeNumber": 1,
+        "Name": "Challenge for November 1",
+        "Bonus": false,
+        "Value": null,
+        "Type": null,
+        "InfoResponse": null
+    }],
+    "Badges": [{
+        "BadgeId": 1,
+        "Name": "First answer",
+        "Code": "FirstParticipation"
+    }, {
+        "BadgeId": 2,
+        "Name": "Image",
+        "Code": "Image"
+    }, {
+        "BadgeId": 3,
+        "Name": "Audio",
+        "Code": "Audio"
+    }, {
+        "BadgeId": 4,
+        "Name": "Video",
+        "Code": "Video"
+    }],
+    "UserBadges": [{
+        "UserId": 1,
+        "BadgeId": 1
+    }, {
+        "UserId": 1,
+        "BadgeId": 3
+    }]
+}

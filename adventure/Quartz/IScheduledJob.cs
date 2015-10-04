@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Adventure.Quartz
 {
-    public interface IScheduledJob
-    {
-        void Run();
-    }
+    //public interface IScheduledJob
+    //{
+    //    void Run();
+    //}
 }
