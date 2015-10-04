@@ -9,7 +9,7 @@ namespace Adventure.Services
 {
     public static class TweetParser
     {
-        public static async Task Main( Tweet twitterMessage )
+        public static void Main( Tweet twitterMessage )
         {
             var twitterUser = twitterMessage.TweetId_num;
             var hashtags = twitterMessage.HashTags.ToList();
@@ -33,11 +33,11 @@ namespace Adventure.Services
                 var challenge = GetChallengeForDay( adventureContext, day );
                 if ( challenge == null )
                 {
-                    await TwitterResponder.SendTweetReply( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser );
+                    TwitterResponder.SendTweetReply( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser );
                     return;
                 }
 
-                var user = GetUser( adventureContext, twitterMessage.TweetId ) ?? NewUser( twitterMessage );
+                var user = GetUser( adventureContext, twitterMessage.TwitterUserIdentifier ) ?? NewUser( twitterMessage );
 
                 var previouslyComplete = CheckChallengeComplete( adventureContext, challenge, user );
                 if ( previouslyComplete == false )
@@ -47,12 +47,12 @@ namespace Adventure.Services
                 }
                 else
                 {
-                    await TwitterResponder.SendTweetReply( "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser );
+                    TwitterResponder.SendTweetReply( "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser );
 
                     if ( twitterMessage.TimeStamp.Date > DateTime.Now.Date ) return;
 
                     var dayDifference = ( DateTime.Now.Date - twitterMessage.TimeStamp.Date ).Days;
-                    await TwitterResponder.SendTweetReply( "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
+                    TwitterResponder.SendTweetReply( "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
                         dayDifference + " days!", twitterUser );
                 }
             }
@@ -107,7 +107,7 @@ namespace Adventure.Services
         private static void NewResponse( AdventureContext adventureContext, Tweet tweet, Challenge challenge )
         {
             var user = adventureContext.Users
-                .Single( u => u.TwitterId == tweet.TwitterUserIdentifier );
+                .First( u => u.TwitterId == tweet.TwitterUserIdentifier );
 
             var response = new Response
             {
@@ -119,11 +119,12 @@ namespace Adventure.Services
             adventureContext.Responses.Add( response );
             adventureContext.SaveChanges();
 
-            VerifyBadges( user.UserId );
+            VerifyBadges(adventureContext, user.UserId );
         }
 
         public static void DetermineContent( Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext )
         {
+            if (challenge == null) return;
             // Is image?
             if ( !( tweet.Media.FirstOrDefault() == null ) && challenge.Type.ToLower() == "image" )
             {
@@ -159,7 +160,7 @@ namespace Adventure.Services
 
             }
             // Is text response
-            else if (challenge.Type.ToLower()=="Text")
+            else if (challenge.Type != null && challenge.Type.ToLower()=="Text")
             {
                 string strippedTweet = StripContent( tweet );
                 CompleteChallenge( challenge, user, adventureContext );
@@ -196,16 +197,13 @@ namespace Adventure.Services
             throw new NotImplementedException();
         }
 
-        private static void VerifyBadges( int userId )
+        private static void VerifyBadges(AdventureContext context, int userId )
         {
-            using ( var context = new AdventureContext() )
-            {
-                VerifyBadgeFirstParticipation( context, userId );
-                VerifyBadgeFirstByType( context, userId, BadgeCodes.Audio );
-                VerifyBadgeFirstByType( context, userId, BadgeCodes.Video );
-                VerifyBadgeFirstByType( context, userId, BadgeCodes.Image );
-                context.SaveChanges();
-            }
+            VerifyBadgeFirstParticipation(context, userId);
+            VerifyBadgeFirstByType(context, userId, BadgeCodes.Audio);
+            VerifyBadgeFirstByType(context, userId, BadgeCodes.Video);
+            VerifyBadgeFirstByType(context, userId, BadgeCodes.Image);
+            context.SaveChanges();
         }
 
         private static void VerifyBadgeFirstParticipation( AdventureContext context, int userId )
