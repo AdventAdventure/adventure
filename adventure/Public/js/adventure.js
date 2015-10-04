@@ -98,6 +98,21 @@ var Adventure = (function () {
                         }
                     });
 
+                    Adventure.Ajax.Retrieve('http://adventure-1.apphb.com/api/challenge/' + day_id, $q).then(function (responses) {
+                        if (responses !== undefined) {
+                            var responseArray = [];
+                            $scope.responses = [];
+                            for (var i = 0; i < responses.length; i++) {
+                                responseArray.push({
+                                    user: responses[i].User,
+                                    tweet: responses[i].Tweet,
+                                    tweetId: responses[i].TweetId
+                                });
+                            }
+                            $scope.responses = responseArray;
+                        }
+                    });
+
                 },
 
                 DayDetails: function ( $scope, $q, $state ) {
@@ -176,40 +191,55 @@ var Adventure = (function () {
 
                 },
 
-                Rankings: function ( $scope, $urlRouter ) {
+                Rankings: function ( $scope, $q, $urlRouter ) {
 
                     this.params = $urlRouter;
 
-                    $scope.myPosition = 25;
-                    $scope.rankings = [
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                      {"UserName":"Gus","Points":120},
-                      {"UserName":"John","Points":99},
-                      {"UserName": "Fireman Sam Long Name","Points":1},
-                    ];
+                    Adventure.Ajax.Retrieve('http://adventure-1.apphb.com/api/ranking/get', $q).then(function (rankings) {
+                        var leaderboard = [];
+
+                        $scope.rankings = [];
+                        for (var i = 0; i < rankings.Positions.length; i++) {
+                            leaderboard.push({
+                                UserName: rankings.Positions[i].UserName,
+                                Points: rankings.Positions[i].Points,
+                            });
+                        }
+                        $scope.rankings = leaderboard;
+
+                    });
+
+
+                    $scope.myPosition = 1;
+                    //$scope.rankings = [
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //  {"UserName":"Gus","Points":120},
+                    //  {"UserName":"John","Points":99},
+                    //  {"UserName": "Fireman Sam Long Name","Points":1},
+                    //];
 
                     $scope.positionClass = function (position) {
                       var classes = "slab ranking";
@@ -232,13 +262,23 @@ var Adventure = (function () {
                     var user_id = Adventure.GetCookie( 'adventureTwitter' );
                     $scope.user = null;
 
+                    var badge_images = [
+                        '', 'pin', 'bells', 'gingerbread', 'trophy', 'star', 'cane', 'world'
+                    ];
+
                     if ( user_id ) {                  
                         Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
                             if ( user !== undefined ) {
-                                var badges = [];
+                                var badges = [],
+                                    i;
                                 if ( user.UserBadges !== undefined ) {
-                                    for (var i = 0; i < user.UserBadges.length; i++) {
+                                    for (i = 0; i < user.UserBadges.length; i++) {
                                         badges.push( user.UserBadges[ i ].BadgeId );
+                                    }
+                                }
+                                if ( user.Badges !== undefined ) {
+                                    for (i = 0; i < user.Badges.length; i++) {
+                                        user.Badges[ i ].suffix = badge_images[ user.Badges[ i ].BadgeId ] + ( badges.indexOf( user.Badges[ i ].BadgeId ) == -1 ? '-full' : '' );
                                     }
                                 }
                                 $scope.badges = badges;
