@@ -10,7 +10,7 @@ namespace Adventure.Services
         public static void Main(Tweet twitterMessage)
         {
             var tweetId = twitterMessage.TweetId_num;
-            var hashtags = twitterMessage.HashTags.ToList();
+            var hashtags = twitterMessage.HashTags.Select(h => h.ToLower()).ToList();
             if (IsSubmitHashtagMissing(hashtags))
             {
                 // Not a submission
@@ -64,10 +64,10 @@ namespace Adventure.Services
                             dayDifference + " days!";
         }
 
-        private static int FindDayFromHashtag(List<string> hashtags)
+        private static int FindDayFromHashtag(IEnumerable<string> hashtags)
         {
-            int day = 0;
-            foreach (var dayString in hashtags.Select(hashtag => hashtag.Replace("AdventHunt", "")))
+            var day = 0;
+            foreach (var dayString in hashtags.Select(hashtag => hashtag.Replace("AdventHunt".ToLower(), "")))
             {
                 if (int.TryParse(dayString, out day))
                     break;
