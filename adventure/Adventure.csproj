@@ -73,6 +73,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
@@ -205,6 +208,7 @@
     <Compile Include="Quartz\ChallengeTweetJob.cs" />
     <Compile Include="Quartz\ScheduledTweet.cs" />
     <Compile Include="Quartz\IScheduledJob.cs" />
+    <Compile Include="Services\BadgeFinder.cs" />
     <Compile Include="Services\Tweet.cs" />
     <Compile Include="Services\TwitterHashtagMonitor.cs" />
     <Compile Include="Services\TweetParser.cs" />
