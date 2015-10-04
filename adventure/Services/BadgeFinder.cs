@@ -1,4 +1,5 @@
 using Adventure.Models;
+using Adventure.Services;
 using System.Linq;
 
 namespace Adventure.Services
@@ -38,8 +39,13 @@ namespace Adventure.Services
                                                BadgeId = badge.BadgeId,
                                                UserId = userId
                                            });
+                    string twitterUserName = context.Users.FirstOrDefault( x => x.UserId == userId ).UserName;
+                    string badgeName = context.Badges.FirstOrDefault( b => b.BadgeId == badge.BadgeId ).Name;
+                    string status = string.Format( "@{0} You've just earnt the {1} badge at @AdventHunters. Why not check it out? http://adventure-1.apphb.com/#/badges", twitterUserName, badgeName );
+                    TwitterResponder.SendTweet( twitterUserName, status );
                 }
             }
+            
         }
 
         public void VerifyBadgeFirstByType(AdventureContext context, int userId, BadgeCodes code)
