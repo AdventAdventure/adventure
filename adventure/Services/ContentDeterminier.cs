@@ -38,7 +38,7 @@ namespace Adventure.Services
 
             }
             // Is text response
-            else if (challenge.Type.ToLower() == "text")
+            else if (challenge.Type != null && challenge.Type.ToLower() == "text")
             {
                 tweet.Text = StripContent(tweet);
 
