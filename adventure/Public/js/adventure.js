@@ -47,6 +47,8 @@ var Adventure = (function () {
                     var day_id = this.params.day_id,
                         day;
 
+                    $scope.background = '';
+
                     $.ajax({
                         url: 'public/content/details/' + day_id + '.html',
                         cache: false
@@ -120,6 +122,8 @@ var Adventure = (function () {
                     this.params = $state.params;
                     var day_id = this.params.content_id,
                         day;
+
+                    $scope.background = '';
 
                     $.ajax({
                         url: 'public/content/more/' + day_id + '.html',
@@ -211,35 +215,6 @@ var Adventure = (function () {
 
 
                     $scope.myPosition = 1;
-                    //$scope.rankings = [
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //  {"UserName":"Gus","Points":120},
-                    //  {"UserName":"John","Points":99},
-                    //  {"UserName": "Fireman Sam Long Name","Points":1},
-                    //];
 
                     $scope.positionClass = function (position) {
                       var classes = "slab ranking";
