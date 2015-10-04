@@ -27,7 +27,7 @@ namespace Adventure.Services
                 where b.Code == BadgeCodes.FirstParticipation.ToString()
                 select b);
 
-            if (context.Responses.Count(x => x.UserId == userId) == 1 && !badgeCount.Any())
+            if (context.UserChallenges.Count(x => x.UserId == userId && x.IsComplete == true) == 1 && !badgeCount.Any())
             {
                 var badge = context.Badges.First(x => x.Code == BadgeCodes.FirstParticipation.ToString());
 
@@ -44,8 +44,8 @@ namespace Adventure.Services
 
         public void VerifyBadgeFirstByType(AdventureContext context, int userId, BadgeCodes code)
         {
-            var result = (from r in context.Responses
-                from c in context.Challenges.Where(x => x.ChallengeId == r.ChallengeId)
+            var result = (from r in context.UserChallenges
+                          from c in context.Challenges.Where(x => x.ChallengeId == r.ChallengeId)
                 where r.UserId == userId
                 where c.Type == code.ToString()
                 select r);

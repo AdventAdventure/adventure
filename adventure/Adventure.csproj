@@ -175,6 +175,7 @@
     <Folder Include="Content\" />
     <Folder Include="fonts\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdventureContext.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\DaysController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
