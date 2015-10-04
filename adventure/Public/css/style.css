@@ -19,7 +19,8 @@ table,
 th,
 td,
 caption,
-hr {
+hr,
+p {
 	padding: 0;
 	margin: 0;
 }
@@ -32,6 +33,10 @@ img {
 
 ol, ul, li {
 	list-style: none;
+}
+
+strong {
+	font-weight: 700;
 }
 
 article,
@@ -60,19 +65,20 @@ th {
 	table-layout: fixed;
 }
 
+p {
+	margin: 0 0 1rem;
+}
+
 /* Global
 --------------------------------*/
 
 body {
-	padding-bottom: 4.5rem;
-	background: #3C4C60;
-	color: #515151;
-	font: 300 16px /1.5 'Josefin Sans', sans-serif;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 	-moz-osx-font-smoothing: grayscale;
 	 -webkit-font-smoothing: antialiased;
+	padding-bottom: 3.5rem;
+	background: #9F242F;
+	color: #515151;
+	font: 300 16px /1.5 'Josefin Sans', sans-serif;
 }
 
 .center {
@@ -81,7 +87,7 @@ body {
 
 a {
 	text-decoration: none;
-	color: #3C4C60;
+	color: #9F242F;
 }
 
 /* Grid
@@ -109,7 +115,7 @@ a {
 h1,
 h2,
 h3 {
-	font-family: 'Josefin Slab', sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
 	margin: 0 0 1rem;
 }
 
@@ -120,25 +126,28 @@ h3 a {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 1.8em;
+	margin-bottom: 0.5rem;
 }
 
 h2 {
-	font-size: 1.8em;
+	font-size: 1.5em;
 }
 
 /* Header
 --------------------------------*/
 
 [role="banner"] {
+	border-bottom: 1px solid rgba( 223, 84, 85, 0.2 );;
 	padding-bottom: 1rem;
 	font-family: 'Josefin Slab', sans-serif;
 	padding-top: 1rem;
 	font-size: 1.25em;
+	background: #212121;
 }
 
-[role="banner"] a {
-	color: #FFF;
+[role="banner"] .logo {
+	color: #FFF;	
 }
 
 /* Main nav
@@ -147,7 +156,7 @@ h2 {
 .main-nav {
 	text-align: center;
 	text-transform: uppercase;
-	background: rgba( 255, 255, 255, 0.8 );
+	background: rgba( 223, 84, 85, 0.9 );
 	position: fixed;
 	z-index: 10;
 	height: 3.5rem;
@@ -168,7 +177,7 @@ h2 {
 }
 
 .main-nav li + li {
-	border-left: 1px solid #CCC;
+	border-left: 1px solid #9F242F;
 }
 
 .main-nav a {
@@ -178,8 +187,8 @@ h2 {
 	display: block;
 	height: 3.5rem;
 	padding: 0.4rem 0 0;
-	font-size: 0.875em;
-	color: #666;
+	font-size: 0.875rem;
+	color: #EEE;
 }
 
 .main-nav a img {
@@ -188,7 +197,7 @@ h2 {
 }
 
 .main-nav a:hover {
-	color: #333;
+	color: #FFF;
 }
 
 .main-nav a:hover img {
@@ -200,26 +209,69 @@ h2 {
 	width: 18px;
 }
 
+@media screen and ( min-width: 35em ) {
+
+	[role=banner] {
+		padding-top: 0.75rem;
+		padding-bottom: 0;
+	}
+
+	[role=banner] .logo {
+		padding-top: 0.5rem;
+		float: left;
+	}
+
+	.main-nav {
+		position: static;
+		text-align: left;
+		background: none;
+		height: auto;
+		width: auto;
+		float: right;
+	}
+
+	.main-nav ul {
+		display: inline-block;
+	}
+
+	.main-nav li {
+		width: auto;
+	}
+
+	.main-nav li + li {
+		border: none;
+	}
+
+	.main-nav a {
+		text-transform: none;
+		margin-left: 2rem;
+		font-size: 0.875rem;
+		padding-top: 0;
+		height: auto;
+	}
+}
+
 /* Forms
 --------------------------------*/
 
 .button {
-	box-shadow: 3px 3px 0 0 #4C5868;
+	box-shadow: 3px 3px 0 0 #8F141F;
 	cursor: pointer;
 	padding: 0.8rem 1.5rem;
 	display: inline-block;
 	margin: 1rem 1rem 1.5rem 0;
-	background: #3C4C60;
+	border: none;
+	background: #9F242F;
 	width: auto;
 	text-align: center;
 	color: #FFF;
-	font: 400 1em 'Josefin Slab', sans-serif;
+	font: 400 1em 'Josefin Sans', sans-serif;
 }
 
-.button.tweet {
+/*.button.tweet {
 	background: #19B5FE;
 	box-shadow: 3px 3px 0 0 #447890;
-}
+}*/
 
 .button + .button {
 	margin-top: 0;
@@ -228,18 +280,34 @@ h2 {
 /* Slab
 --------------------------------*/
 
+@media screen and ( min-width: 30em ) {
+
+	[role=main] {
+		padding: 0;
+	}
+
+	[role=main] > .slab:first-child {
+		margin-top: 1.5rem;
+	}
+
+}
+
 .slab {
 	margin-bottom: 1.5rem;
 	box-shadow: 7px 7px 0 0 rgba( 255, 255, 255, 0.05 );
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
 	position: relative;
-	background: rgba( 255, 255, 255, 0.1 );
-	color: #FFF;
+	background: #E1C4BE;
+	color: #353238;
 }
 
 .slab :last-child {
 	margin-bottom: 0;
+}
+
+.slab--content {
+	font-size: 1.25em;
 }
 
 /* Challenge
@@ -279,8 +347,69 @@ h2 {
 }
 
 .challenge--home {
-	width: 25%;
-	float: left;
+	/*width: 25%;
+	float: left;*/
+}
+
+@media screen and ( min-width: 25em ) {
+	.challenge--home {
+		width: 50%;
+		float: left;
+	}
+
+	.challenge.challenge--home:nth-child(2) {
+		border-top: none;
+	}
+
+	.challenge--home:nth-child(2n+1) {
+		clear: left;
+	}
+}
+
+@media screen and ( min-width: 40em ) {
+	.challenge--home {
+		width: 33.333%;
+		float: left;
+	}
+
+	.challenge--home:nth-child(3) {
+		border-top: none;
+	}
+
+	.challenge--home:nth-child(2n+1) {
+		clear: none;
+	}
+
+	.challenge--home:nth-child(3n+1) {
+		clear: left;
+	}
+}
+
+@media screen and ( min-width: 50em ) {
+	.challenge--home {
+		width: 25%;
+		float: left;
+	}
+
+	.challenge--home:nth-child(4) {
+		border-top: none;
+	}
+
+	.challenge--home:nth-child(3n+1) {
+		clear: none;
+	}
+
+	.challenge--home:nth-child(4n+1) {
+		clear: left;
+	}
+}
+
+.challenge--home:hover {
+	background: rgba( 0, 0, 0, 0.1 );
+}
+
+.challenge--home + .challenge--home {
+	border-top: 1px solid rgba( 230, 85, 85, 0.2 );
 }
 
 .challenge--home a {

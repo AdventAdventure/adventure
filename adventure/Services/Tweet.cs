@@ -12,6 +12,7 @@ namespace Adventure.Services
         public IEnumerable<string> HashTags { get; set; }
         public string Text { get; set; }
         public DateTime TimeStamp { get; set; }
+        public ulong TweetId_num { get; set; }
         public string TweetId { get; set; }
         public List<MediaEntity> Media { get; internal set; }
         public IEnumerable<string> Urls { get; internal set; }

@@ -20,22 +20,18 @@ var Adventure = (function () {
                 Main: function ( $scope, $q ) {
 
                     $scope.days = [];
-                    var challenges = [],
-                        challenge;
+                    var allDates = [],
+                        today = parseInt( new Date().getDate() );
 
-                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
-                        if ( dayslist !== undefined ) {
-                            dayslist = dayslist.Days;
-                            for (var i = 0; i < dayslist.length; i++) {
-                                for (var j = 0; j < dayslist[ i ].Challenges.length; j++) {
-                                    challenge = dayslist[ i ].Challenges[ j ];
-                                    challenge.Day = dayslist[ i ].Day;
-                                    challenge.challenge_id = j;
-                                    challenge.ilk = challenge.Challenge.Hashtag.toLowerCase().indexOf("bonus") >= 0 ? 'bonus' : 'standard';
-                                    challenges.push( challenge );
+                    Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dates ) {
+                        if ( dates !== undefined ) {
+                            for (var i = 0; i < dates.length; i++) {
+                                if ( today >= dates[ i ].Challenge.ChallengeNumber ) {
+                                    dates[ i ].available = true;
                                 }
+                                allDates.push( dates[ i ] );
                             }
-                            $scope.days = challenges;
+                            $scope.days = allDates;
                         }
                     });
 
@@ -45,9 +41,11 @@ var Adventure = (function () {
 
                     this.params = $state.params;
                     var day_id = this.params.day_id,
-                        challenge_id = this.params.challenge_id !== undefined && this.params.challenge_id ? parseInt( this.params.challenge_id ) : 0,
-                        challenge,
                         day;
+
+                    $.get( 'public/content/details/' + day_id + '.html' ).then(function( response ) {
+                        $( '.slab--content' ).html( response );
+                    });
 
                     Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
                         if ( dayslist !== undefined ) {
@@ -55,13 +53,8 @@ var Adventure = (function () {
 
                             for (var i = 0; i < dayslist.length; i++) {
                                 if ( dayslist[ i ].Day == day_id ) {
-                                    day = dayslist[ i ];
-
-                                    if ( day.Challenges[ challenge_id ] !== undefined ) {
-                                        challenge = day.Challenges[ challenge_id ];
-                                        challenge.Day = day_id;
-                                        $scope.day = challenge;
-                                    }
+                                    $scope.day = dayslist[ i ];
+                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
                                 }
                             }
                         }
@@ -73,8 +66,6 @@ var Adventure = (function () {
 
                     this.params = $state.params;
                     var day_id = this.params.day_id,
-                        challenge_id = this.params.challenge_id !== undefined && this.params.challenge_id ? parseInt( this.params.challenge_id ) : 0,
-                        challenge,
                         day;
 
                     Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
@@ -83,13 +74,8 @@ var Adventure = (function () {
 
                             for (var i = 0; i < dayslist.length; i++) {
                                 if ( dayslist[ i ].Day == day_id ) {
-                                    day = dayslist[ i ];
-
-                                    if ( day.Challenges[ challenge_id ] !== undefined ) {
-                                        challenge = day.Challenges[ challenge_id ];
-                                        challenge.Day = day_id;
-                                        $scope.day = challenge;
-                                    }
+                                    $scope.day = dayslist[ i ];
+                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
                                 }
                             }
                         }
@@ -100,13 +86,10 @@ var Adventure = (function () {
                 DayDetails: function ( $scope, $q, $state ) {
 
                     this.params = $state.params;
-                    var content_id = this.params.content_id,
-                        challenge,
+                    var day_id = this.params.content_id,
                         day;
 
-                    $scope.the_content = '';
-
-                    $.get( 'public/content/' + content_id + '.html' ).then(function( response ) {
+                    $.get( 'public/content/more/' + day_id + '.html' ).then(function( response ) {
                         $( '.slab--content' ).html( response );
                     });
 
@@ -115,14 +98,9 @@ var Adventure = (function () {
                             dayslist = Adventure.ProcessDates( dayslist );
 
                             for (var i = 0; i < dayslist.length; i++) {
-                                if ( dayslist[ i ].Day == content_id ) {
-
-                                    day = dayslist[ i ];
-                                    if ( day.Challenges[ 0 ] !== undefined ) {
-                                        day.Challenge = day.Challenges[ 0 ];
-                                    }
-
-                                    $scope.day = day;
+                                if ( dayslist[ i ].Day == day_id ) {
+                                    $scope.day = dayslist[ i ];
+                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
                                 }
                             }
                         }
@@ -130,9 +108,8 @@ var Adventure = (function () {
 
                 },
 
-                Days: function ( $scope, $urlRouter, $q ) {
+                Days: function ( $scope, $q ) {
 
-                    $scope.params = $urlRouter;
                     $scope.days = [];
                     Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
                         if ( dayslist !== undefined ) {
@@ -140,6 +117,38 @@ var Adventure = (function () {
                             $scope.days = dayslist;
                         }
                     });
+
+                },
+
+                User: function ( $scope, $q, $state ) {
+
+                    var user_id = $state.params.user_id;
+                    $scope.user = [];
+                    Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                        if ( user !== undefined ) {
+                            $scope.user = user;
+                        }
+                    });
+
+                },
+
+                UserProfile: function ( $scope, $q, $state, twitterService ) {
+
+                    var user_id = '';
+                    $scope.user = null;
+
+                    var service = twitterService.isReady();
+                    if ( service ) {
+                        service.me().done(function (result) {
+                            user_id = result.alias;
+
+                            Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                                if ( user !== undefined ) {
+                                    $scope.user = user;
+                                }
+                            });
+                        });
+                    }
 
                 },
 
@@ -185,24 +194,24 @@ var Adventure = (function () {
                       }
 
                       return classes;
-                    }
+                    };
 
                     $scope.rankingVisible = function (position) {
                       var topTen = position < 10;
                       var nearMe = Math.abs(position - $scope.myPosition) < 4;
                       return topTen || nearMe;
-                    }
+                    };
                 },
 
-                Badges: function ( $urlRouter ) {
+                Badges: function () {
 
-                    this.params = $urlRouter;
+                    
 
                 },
 
-                FourOhFour: function ( $urlRouter ) {
+                FourOhFour: function () {
 
-                    this.params = $urlRouter;
+                    
 
                 }
 
@@ -219,7 +228,7 @@ var Adventure = (function () {
                         controller: Adventure.Angular.Controller.Days
                     })
                     .state('day/:content_id', {
-                        url: "/day/{content_id}/details",
+                        url: "/day/{content_id}/more",
                         templateUrl: 'public/templates/day-details.html',
                         controller: Adventure.Angular.Controller.DayDetails,
                         controllerAs: 'day'
@@ -245,6 +254,18 @@ var Adventure = (function () {
                         url: "/badges",
                         templateUrl: 'Public/templates/badges.html',
                         controller: Adventure.Angular.Controller.Badges
+                    })
+                    .state('user/profile', {
+                        url: "/user/profile",
+                        templateUrl: 'Public/templates/user-profile.html',
+                        controller: Adventure.Angular.Controller.UserProfile,
+                        controllerAs: 'user'
+                    })
+                    .state('user', {
+                        url: "/user/{user_id}",
+                        templateUrl: 'Public/templates/user.html',
+                        controller: Adventure.Angular.Controller.User,
+                        controllerAs: 'user'
                     })
                     .state('index', {
                         url: '/',
@@ -294,24 +315,63 @@ var Adventure = (function () {
 
         ProcessDates: function ( dates ) {
 
-            var days = dates.Days,
-                pastDates = [],
+            var pastDates = [],
                 today = parseInt( new Date().getDate() );
 
-            if ( days !== undefined ) {
-                for (var i = 0; i < days.length; i++) {
-                    if ( today >= days[ i ].Day ) {
-                        pastDates.push( days[ i ] );
+            if ( dates !== undefined ) {
+                for (var i = 0; i < dates.length; i++) {
+                    if ( today >= dates[ i ].Challenge.ChallengeNumber ) {
+                        pastDates.push( dates[ i ] );
                     }
                 }
             }
             return pastDates;
+        },
+
+        Twitter: {
+
+            Controller: function ( $scope, $q, twitterService, $state ) {
+
+                $scope.tweets = [];
+                
+                twitterService.initialize();
+                
+                $scope.Connect = function() {
+                    twitterService.connectTwitter().then(function() {
+                        if (twitterService.isReady()) {
+                            $state.reload();
+                        }
+                    });
+                };
+
+                $scope.SignOut = function() {
+                    twitterService.clearCache();
+                    $scope.tweets.length = 0;
+                    $('#getTimelineButton, #signOut').fadeOut(function(){
+                        $('#connectButton').fadeIn();
+                    });
+                };
+
+                if (twitterService.isReady()) {
+
+                }
+
+            },
+
+            GetLink: function ( day ) {
+
+                return '<a href="https://twitter.com/intent/tweet?text=%23AdventHunt' + day.Day + '%20%23submit&original_referer=' + window.location.href + '" class="button tweet">Tweet your entry</a>';
+
+            }
+
         }
 
     };
 }());
 
-var app = angular.module( 'adventure', [ 'ui.router' ] );
+var app = angular.module( 'adventure', [ 'ui.router', 'twitterApp.services', 'ngSanitize' ] );
+
+app.controller('TwitterController', Adventure.Twitter.Controller );
 
 app.config(['$stateProvider', '$urlRouterProvider', Adventure.Angular.Router ]);
 

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using Adventure.Models;
 
 namespace Adventure
@@ -11,5 +12,11 @@ namespace Adventure
         public DbSet<Response> Responses { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserBadge> UserBadges { get; set; }
+        public DbSet<UserChallenge> UserChallenges { get; set; }
+
+        protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        {
+            Database.SetInitializer( new MigrateDatabaseToLatestVersion<AdventureContext, Adventure.Migrations.Configuration>() );
+        }
     }
 }

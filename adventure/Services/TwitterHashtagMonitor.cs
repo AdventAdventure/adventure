@@ -9,7 +9,7 @@ namespace Adventure.Services
         private static IAuthorizer _authorizer;
         private TwitterContext _twitterContext;
 
-        private static IAuthorizer Authorizer 
+        public static IAuthorizer Authorizer 
         {
             get
             {
@@ -62,10 +62,11 @@ namespace Adventure.Services
                 Urls = status.Entities.UrlEntities.Select(x => x.Url),
                 Text = status.Text,
                 TimeStamp = status.CreatedAt,
+                TweetId_num = status.StatusID,
                 TweetId = status.StatusID.ToString(),
                 Media = status.Entities.MediaEntities
             };
-            TweetParser.Main( tweet );
+            await TweetParser.Main( tweet );
             await Task.Yield();
         }
 

@@ -4,41 +4,40 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="initial-scale=1.0" />
 		<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+		<meta name="theme-color" content="#9F242F" />
 		<title></title>
 		<base href="/" />
-		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300|Josefin+Slab:300" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,700" rel="stylesheet" type="text/css">
 		<link href="Public/css/style.css" media="all" rel="stylesheet" />
 	</head>
 	<body>
 		<header role="banner">
-			<div class="wrap">
-				<a ui-sref="index" class="logo">Advent Adventure</a>
+			<div class="wrap clear">
+				<a ui-sref="index" class="logo"><strong>Advent</strong>ure</a>
+				<nav class="main-nav">
+					<ul>
+						<li>
+							<a ui-sref="rankings"><img src="Public/images/Podium.svg" /><br />Rankings</a>
+						</li>
+						<li>
+							<a ui-sref="days"><img src="Public/images/Calendar.svg" /><br />Days</a>
+						</li>
+						<li>
+							<a ui-sref="badges"><img src="Public/images/Badge.svg" /><br />Badges</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</header>
 
-		<nav class="main-nav">
-			<ul>
-				<li>
-					<a ui-sref="rankings"><img src="Public/images/Podium.svg" /><br />Rankings</a>
-				</li>
-				<li>
-					<a ui-sref="days"><img src="Public/images/Calendar.svg" /><br />Days</a>
-				</li>
-				<li>
-					<a ui-sref="badges"><img src="Public/images/Badge.svg" /><br />Badges</a>
-				</li>
-			</ul>
-		</nav>
 
 		<main role="main" ui-view></main>
-
-		<footer role="contentinfo">
-			
-		</footer>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+		<script src="//code.angularjs.org/1.4.7/angular-sanitize.js"></script>
+		<script src="Public/js/services.js"></script>
 		<script src="Public/js/adventure.js"></script>
 
 	</body>

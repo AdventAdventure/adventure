@@ -1,412 +1,241 @@
-{
-    "Days": [
-        {
-            "Day": 1,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 1",
-                        "Hashtag": "#AdventureDay1"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 1",
-                        "Hashtag": "#AdventureDay1_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 2,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 2",
-                        "Hashtag": "#AdventureDay2"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 2",
-                        "Hashtag": "#AdventureDay2_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 3,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 3",
-                        "Hashtag": "#AdventureDay3"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 3",
-                        "Hashtag": "#AdventureDay3_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 4,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 4",
-                        "Hashtag": "#AdventureDay4"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 4",
-                        "Hashtag": "#AdventureDay4_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 5,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 5",
-                        "Hashtag": "#AdventureDay5"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 5",
-                        "Hashtag": "#AdventureDay5_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 6,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 6",
-                        "Hashtag": "#AdventureDay6"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 6",
-                        "Hashtag": "#AdventureDay6_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 7,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 7",
-                        "Hashtag": "#AdventureDay7"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 7",
-                        "Hashtag": "#AdventureDay7_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 8,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 8",
-                        "Hashtag": "#AdventureDay8"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 8",
-                        "Hashtag": "#AdventureDay8_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 9,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 9",
-                        "Hashtag": "#AdventureDay9"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 9",
-                        "Hashtag": "#AdventureDay9_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 10,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 10",
-                        "Hashtag": "#AdventureDay10"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 10",
-                        "Hashtag": "#AdventureDay10_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 11,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 11",
-                        "Hashtag": "#AdventureDay11"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 11",
-                        "Hashtag": "#AdventureDay11_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 12,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 12",
-                        "Hashtag": "#AdventureDay12"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 12",
-                        "Hashtag": "#AdventureDay12_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 13,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 13",
-                        "Hashtag": "#AdventureDay13"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 13",
-                        "Hashtag": "#AdventureDay13_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 14,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 14",
-                        "Hashtag": "#AdventureDay14"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 14",
-                        "Hashtag": "#AdventureDay14_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 15,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 15",
-                        "Hashtag": "#AdventureDay15"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 15",
-                        "Hashtag": "#AdventureDay15_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 16,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 16",
-                        "Hashtag": "#AdventureDay16"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 16",
-                        "Hashtag": "#AdventureDay16_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 17,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 17",
-                        "Hashtag": "#AdventureDay17"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 17",
-                        "Hashtag": "#AdventureDay17_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 18,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 18",
-                        "Hashtag": "#AdventureDay18"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 18",
-                        "Hashtag": "#AdventureDay18_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 19,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 19",
-                        "Hashtag": "#AdventureDay19"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 19",
-                        "Hashtag": "#AdventureDay19_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 20,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 20",
-                        "Hashtag": "#AdventureDay20"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 20",
-                        "Hashtag": "#AdventureDay20_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 21,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 21",
-                        "Hashtag": "#AdventureDay21"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 21",
-                        "Hashtag": "#AdventureDay21_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 22,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 22",
-                        "Hashtag": "#AdventureDay22"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 22",
-                        "Hashtag": "#AdventureDay22_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 23,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 23",
-                        "Hashtag": "#AdventureDay23"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 23",
-                        "Hashtag": "#AdventureDay23_Bonus1"
-                    }
-                }
-            ]
-        },
-        {
-            "Day": 24,
-            "Challenges": [
-                {
-                    "Challenge": {
-                        "Title": "Challenge for December 24",
-                        "Hashtag": "#AdventureDay24"
-                    }
-                },
-                {
-                    "Challenge": {
-                        "Title": "Bonus challenge for December 24",
-                        "Hashtag": "#AdventureDay24_Bonus1"
-                    }
-                }
-            ]
-        }
-    ]
-}
+[{
+    "Day": 1,
+    "Challenge": {
+        "ChallengeId": 1,
+        "ChallengeNumber": 1,
+        "Name": "Celebrate with a mince pie!",
+        "Bonus": false,
+        "Value": 1,
+        "Type": "Image"
+    }
+}, {
+    "Day": 2,
+    "Challenge": {
+        "ChallengeId": 2,
+        "ChallengeNumber": 2,
+        "Name": "Reflective challenge: wreaths!",
+        "Bonus": false,
+        "Value": 2,
+        "Type": "Image"
+    }
+}, {
+    "Day": 3,
+    "Challenge": {
+        "ChallengeId": 3,
+        "ChallengeNumber": 3,
+        "Name": "Remix a Christmas Carol",
+        "Bonus": false,
+        "Value": 3,
+        "Type": "Audio"
+    }
+}, {
+    "Day": 4,
+    "Challenge": {
+        "ChallengeId": 4,
+        "ChallengeNumber": 4,
+        "Name": "Challenge for December 4",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 5,
+    "Challenge": {
+        "ChallengeId": 5,
+        "ChallengeNumber": 5,
+        "Name": "Challenge for December 5",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 6,
+    "Challenge": {
+        "ChallengeId": 6,
+        "ChallengeNumber": 6,
+        "Name": "Challenge for December 6",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 7,
+    "Challenge": {
+        "ChallengeId": 7,
+        "ChallengeNumber": 7,
+        "Name": "Challenge for December 7",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 8,
+    "Challenge": {
+        "ChallengeId": 8,
+        "ChallengeNumber": 8,
+        "Name": "Challenge for December 8",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 9,
+    "Challenge": {
+        "ChallengeId": 9,
+        "ChallengeNumber": 9,
+        "Name": "Challenge for December 9",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 10,
+    "Challenge": {
+        "ChallengeId": 10,
+        "ChallengeNumber": 10,
+        "Name": "Challenge for December 10",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 11,
+    "Challenge": {
+        "ChallengeId": 11,
+        "ChallengeNumber": 11,
+        "Name": "Challenge for December 11",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 12,
+    "Challenge": {
+        "ChallengeId": 12,
+        "ChallengeNumber": 12,
+        "Name": "Challenge for December 12",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 13,
+    "Challenge": {
+        "ChallengeId": 13,
+        "ChallengeNumber": 13,
+        "Name": "Challenge for December 13",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 14,
+    "Challenge": {
+        "ChallengeId": 14,
+        "ChallengeNumber": 14,
+        "Name": "Challenge for December 14",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 15,
+    "Challenge": {
+        "ChallengeId": 15,
+        "ChallengeNumber": 15,
+        "Name": "Challenge for December 15",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 16,
+    "Challenge": {
+        "ChallengeId": 16,
+        "ChallengeNumber": 16,
+        "Name": "Challenge for December 16",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 17,
+    "Challenge": {
+        "ChallengeId": 17,
+        "ChallengeNumber": 17,
+        "Name": "Challenge for December 17",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 18,
+    "Challenge": {
+        "ChallengeId": 18,
+        "ChallengeNumber": 18,
+        "Name": "Challenge for December 18",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 19,
+    "Challenge": {
+        "ChallengeId": 19,
+        "ChallengeNumber": 19,
+        "Name": "Challenge for December 19",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 20,
+    "Challenge": {
+        "ChallengeId": 20,
+        "ChallengeNumber": 20,
+        "Name": "Challenge for December 20",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 21,
+    "Challenge": {
+        "ChallengeId": 21,
+        "ChallengeNumber": 21,
+        "Name": "Challenge for December 21",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 22,
+    "Challenge": {
+        "ChallengeId": 22,
+        "ChallengeNumber": 22,
+        "Name": "Challenge for December 22",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 23,
+    "Challenge": {
+        "ChallengeId": 23,
+        "ChallengeNumber": 23,
+        "Name": "Challenge for December 23",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}, {
+    "Day": 24,
+    "Challenge": {
+        "ChallengeId": 24,
+        "ChallengeNumber": 24,
+        "Name": "Challenge for December 24",
+        "Bonus": false,
+        "Value": null,
+        "Type": null
+    }
+}]

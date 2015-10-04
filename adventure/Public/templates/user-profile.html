@@ -1,0 +1,12 @@
+<div class="slab" ng-if="isEmpty(user)">
+	<h1>Your profile</h1>
+	<div ng-controller="TwitterController">
+		<button ng-click="SignOut()" class="button">Sign out from Twitter</button>
+	</div>
+</div>
+<aside class="slab" ng-if="!isEmpty(user)">
+	<h1>Sign up</h1>
+	<div ng-controller="TwitterController">
+		<button ng-click="Connect()" class="button">Connect with Twitter</button>
+	</div>
+</aside>
