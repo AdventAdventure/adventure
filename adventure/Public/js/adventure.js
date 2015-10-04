@@ -47,9 +47,21 @@ var Adventure = (function () {
                     var day_id = this.params.day_id,
                         day;
 
-                    $.get( 'public/content/details/' + day_id + '.html' ).then(function( response ) {
+                    $.ajax({
+                        url: 'public/content/details/' + day_id + '.html',
+                        cache: false
+                    }).then(function( response ) {
                         $( '.slab--content' ).html( response );
                     });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'public/content/images/' + day_id + '.jpg',
+                        datatype: 'image/jpg',
+                        success: function (data) {
+                            $scope.background = 'background-image: url(/public/content/images/' + day_id + '.jpg);';
+                        }
+                     });
 
                     Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
                         if ( dayslist !== undefined ) {
@@ -58,7 +70,8 @@ var Adventure = (function () {
                             for (var i = 0; i < dayslist.length; i++) {
                                 if ( dayslist[ i ].Day == day_id ) {
                                     $scope.day = dayslist[ i ];
-                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
+                                    $scope.tweet = Adventure.Twitter.GetButton( $scope.day );
+                                    $( '.slab--content .tweet' ).attr( 'href', Adventure.Twitter.GetLink( $scope.day ) );
                                 }
                             }
                         }
@@ -79,7 +92,7 @@ var Adventure = (function () {
                             for (var i = 0; i < dayslist.length; i++) {
                                 if ( dayslist[ i ].Day == day_id ) {
                                     $scope.day = dayslist[ i ];
-                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
+                                    $scope.tweet = Adventure.Twitter.GetButton( $scope.day );
                                 }
                             }
                         }
@@ -93,7 +106,10 @@ var Adventure = (function () {
                     var day_id = this.params.content_id,
                         day;
 
-                    $.get( 'public/content/more/' + day_id + '.html' ).then(function( response ) {
+                    $.ajax({
+                        url: 'public/content/more/' + day_id + '.html',
+                        cache: false
+                    }).then(function( response ) {
                         $( '.slab--content' ).html( response );
                     });
 
@@ -104,7 +120,7 @@ var Adventure = (function () {
                             for (var i = 0; i < dayslist.length; i++) {
                                 if ( dayslist[ i ].Day == day_id ) {
                                     $scope.day = dayslist[ i ];
-                                    $scope.tweet = Adventure.Twitter.GetLink( $scope.day );
+                                    $scope.tweet = Adventure.Twitter.GetButton( $scope.day );
                                 }
                             }
                         }
@@ -375,8 +391,12 @@ var Adventure = (function () {
             },
 
             GetLink: function ( day ) {
+                return 'https://twitter.com/intent/tweet?text=%23AdventHunt' + day.Day + '%20%23submit&original_referer=' + window.location.href;
+            },
 
-                return '<a href="https://twitter.com/intent/tweet?text=%23AdventHunt' + day.Day + '%20%23submit&original_referer=' + window.location.href + '" class="button tweet">Tweet your entry</a>';
+            GetButton: function ( day ) {
+
+                return '<a href="' + Adventure.Twitter.GetLink( day ) + '" class="button tweet">Tweet your entry</a>';
 
             }
 
