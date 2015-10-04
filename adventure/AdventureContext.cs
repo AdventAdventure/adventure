@@ -16,7 +16,7 @@ namespace Adventure
 
         protected override void OnModelCreating( DbModelBuilder modelBuilder )
         {
-            Database.SetInitializer( new MigrateDatabaseToLatestVersion<AdventureContext, Adventure.Migrations.Configuration>() );
+            Database.SetInitializer( new MigrateDatabaseToLatestVersion<AdventureContext, Migrations.Configuration>() );
         }
     }
 }
