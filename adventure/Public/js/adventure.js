@@ -85,6 +85,21 @@ var Adventure = (function () {
                         }
                     });
 
+                    Adventure.Ajax.Retrieve('http://adventure-1.apphb.com/api/challenge/' + day_id, $q).then(function (responses) {
+                        if (responses !== undefined) {
+                            var responseArray = [];
+                            $scope.responses = [];
+                            for (var i = 0; i < responses.length; i++) {
+                                responseArray.push({
+                                    user: responses[i].User,
+                                    tweet: responses[i].Tweet,
+                                    tweetId: responses[i].TweetId
+                                });
+                            }
+                            $scope.responses = responseArray;
+                        }
+                    });
+
                 },
 
                 DayDetails: function ( $scope, $q, $state ) {

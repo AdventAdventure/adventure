@@ -3,5 +3,11 @@
 	<h2>#AdventHunt{{day.Day}}</h2>
 
 	<span ng-bind-html="tweet"></span>
-	<a href="/#/day/{{day.Day}}/more" class="button">Find out more</a>
+    <a href="/#/day/{{day.Day}}/more" class="button">Find out more</a>
+
+    <section class="slab" ng-repeat="response in responses">
+        <h3 class="">{{response.user}}</h3>
+        <p>{{response.tweet}}</p>
+    </section>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
