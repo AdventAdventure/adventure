@@ -18,12 +18,7 @@ namespace Adventure.Services
                 return;
             }
 
-            int day = 0;
-            foreach (var dayString in hashtags.Select(hashtag => hashtag.Replace("AdventHunt", "")))
-            {
-                if (int.TryParse(dayString, out day))
-                    break;
-            }
+            var day = FindDayFromHashtag(hashtags);
 
             if (day == 0) return;
 
@@ -43,19 +38,42 @@ namespace Adventure.Services
                 {
                     NewResponse(adventureContext, twitterMessage, challenge);
                     DetermineContent(twitterMessage, challenge, user, adventureContext);
+                    return;
+                }
+                if (twitterMessage.TimeStamp.Date > DateTime.Now.Date)
+                {
+                    ReplyWithAlreadyAnswered(twitterMessage, twitterUser);
                 }
                 else
                 {
-                    TwitterResponder.SendTweetReply("Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser);
-
-                    if (twitterMessage.TimeStamp.Date > DateTime.Now.Date) return;
-
-                    var dayDifference = (DateTime.Now.Date - twitterMessage.TimeStamp.Date).Days;
-                    TwitterResponder.SendTweetReply("Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
-                        dayDifference + " days!", twitterUser);
+                    ReplyWithTooSoon(twitterUser);
                 }
             }
-            //If here is reached then they have not submitted a new challenge
+        }
+
+        private static void ReplyWithTooSoon(ulong twitterUser)
+        {
+            TwitterResponder.SendTweetReply(
+                "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser);
+        }
+
+        private static void ReplyWithAlreadyAnswered(Tweet twitterMessage, ulong twitterUser)
+        {
+            var dayDifference = (DateTime.Now.Date - twitterMessage.TimeStamp.Date).Days;
+            TwitterResponder.SendTweetReply(
+                "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
+                dayDifference + " days!", twitterUser);
+        }
+
+        private static int FindDayFromHashtag(List<string> hashtags)
+        {
+            int day = 0;
+            foreach (var dayString in hashtags.Select(hashtag => hashtag.Replace("AdventHunt", "")))
+            {
+                if (int.TryParse(dayString, out day))
+                    break;
+            }
+            return day;
         }
 
         private static bool CheckChallengeComplete(AdventureContext adventureContext, Challenge challenge, User user)
