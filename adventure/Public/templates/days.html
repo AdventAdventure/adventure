@@ -1,4 +1,8 @@
-<section class="slab challenge" ng-repeat="day in days">
-	<h1 class="slab__title"><a href="/#/day/{{day.Day}}">Day {{day.Day}} - {{day.Challenge.Hashtag}}</a></h1>
-	<h2 class="challenge__title"><strong>Task:</strong> {{day.Challenge.Title}}</h2>
-</section>
+<ol class="advent-calendar clear">
+	<li class="challenge challenge--home challenge--{{day.ilk}}" ng-repeat="day in days">
+		<a href="/#/day/{{day.Day}}">
+			<h2 class="challenge__title">{{day.Challenge.Name}}</h2>
+			<h3 class="slab__title">#AdventHunt{{day.Day}}</h3>
+		</a>
+	</li>
+</ol>

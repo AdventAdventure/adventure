@@ -9,16 +9,17 @@ namespace Adventure.Services
 {
     public class TwitterResponder
     {
-        public static void SendTweet(string status)
+        public static void SendTweet(string twitterUser, string status)
         {
             var twitterContext = new TwitterContext(TwitterHashtagMonitor.Authorizer);
             Task.FromResult(twitterContext.TweetAsync( status ));
         }
 
-        public static void SendTweetReply( string status, ulong replyId )
+        public static void SendTweetReply( string twitterUser, string status, ulong replyId )
         {
             var twitterContext = new TwitterContext( TwitterHashtagMonitor.Authorizer );
-            Task.FromResult(twitterContext.TweetAsync( status ));
+            var tweet = string.Format( "@{0} {1}", twitterUser, status);
+            Task.FromResult(twitterContext.ReplyAsync( replyId, tweet ) );
         }
     }
 }

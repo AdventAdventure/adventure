@@ -9,7 +9,7 @@ namespace Adventure.Services
     {
         public static void Main(Tweet twitterMessage)
         {
-            var twitterUser = twitterMessage.TweetId_num;
+            var tweetId = twitterMessage.TweetId_num;
             var hashtags = twitterMessage.HashTags.ToList();
             if (IsSubmitHashtagMissing(hashtags))
             {
@@ -26,11 +26,11 @@ namespace Adventure.Services
                 var challenge = GetChallengeForDay(adventureContext, day);
                 if (challenge == null)
                 {
-                    TwitterResponder.SendTweetReply("Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser);
+                    TwitterResponder.SendTweetReply(twitterMessage.ScreenName, "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", tweetId);
                     return;
                 }
 
-                var user = GetUser(adventureContext, twitterMessage.TweetId) ?? NewUser(twitterMessage);
+                var user = GetUser(adventureContext, twitterMessage.TwitterUserIdentifier) ?? NewUser(twitterMessage);
 
                 var previouslyComplete = CheckChallengeComplete(adventureContext, challenge, user);
                 if (previouslyComplete == false)
@@ -39,7 +39,7 @@ namespace Adventure.Services
                     ContentDeterminier.DetermineContent(twitterMessage, challenge, user, adventureContext);
                     return;
                 }
-                ReplyWithError(twitterMessage, twitterUser);
+                ReplyWithError(twitterMessage, tweetId);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Adventure.Services
             var message = twitterMessage.TimeStamp.Date > DateTime.Now.Date
                 ? ReplyWithAlreadyAnswered(twitterMessage)
                 : ReplyWithTooSoon();
-            TwitterResponder.SendTweetReply(message, twitterUser);
+            TwitterResponder.SendTweetReply( twitterMessage.ScreenName, message, twitterUser);
         }
 
         private static string ReplyWithTooSoon()
@@ -130,7 +130,7 @@ namespace Adventure.Services
             };
             adventureContext.UserChallenges.Add(userChallenge);
             adventureContext.SaveChanges();
-            TwitterResponder.SendTweetReply(challenge.InfoResponse, tweet.TweetId_num);
+            TwitterResponder.SendTweetReply(user.ScreenName, challenge.InfoResponse, tweet.TweetId_num);
             new BadgeFinder(adventureContext).VerifyBadges(user.UserId);
         }
     }
