@@ -8,6 +8,7 @@ namespace Adventure.Services
     {
         public static void DetermineContent(Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext)
         {
+
             // Is image?
             if (tweet.Media.FirstOrDefault() != null && challenge.Type.ToLower() == "image")
             {
@@ -37,7 +38,7 @@ namespace Adventure.Services
 
             }
             // Is text response
-            else if (challenge.Type.ToLower() == "Text")
+            else if (challenge.Type.ToLower() == "text")
             {
                 tweet.Text = StripContent(tweet);
 
