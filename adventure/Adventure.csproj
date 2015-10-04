@@ -179,7 +179,7 @@
     <Folder Include="Areas\" />
     <Folder Include="Content\" />
     <Folder Include="fonts\" />
-    <Folder Include="Public\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdventureContext.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\DaysController.cs" />
     <Compile Include="Controllers\TestController.cs" />
