@@ -212,6 +212,83 @@ namespace Adventure.Services
             }
         }
 
+        private static void VerifyBadgeStreak( AdventureContext context, int userId )
+        {
+            int[] previousDays = ( from uc in context.UserChallenges.Where( x => x.UserId == userId && x.IsComplete == true )
+                                   from c in context.Challenges
+                                   select c.ChallengeNumber )
+                                 .ToArray();
+            int streak = getConsecutiveCount( previousDays );
+            for ( int i = 0; i <= 24; )
+            {
+                if ( streak >= i )
+                {
+                    var streakBadge = ( from ub in context.UserBadges
+                                  from b in context.Badges.Where( x => x.BadgeId == ub.BadgeId )
+                                  where ub.UserId == userId
+                                  where b.Code == "Streak" + i.ToString()
+                                  select b );
+                    if (streakBadge == null)
+                    {
+                        var badge = context.Badges.First( x => x.Code == "Streak" + i.ToString() );
+
+                        context.UserBadges.Add( new UserBadge
+                        {
+                            BadgeId = badge.BadgeId,
+                            UserId = userId
+                        } );
+
+                    }
+
+                }
+                else
+                {
+                    break;
+                }
+
+                if ( i <= 6 )
+                {
+                    i += 3;
+                }
+                else
+                {
+                    i += 6;
+                }
+            }
+        }
+
+        public static int getConsecutiveCount( int[] A )
+        {
+            int r = 1, t = 1;
+            bool c = false;
+            for ( int i = 0; i < A.Count(); i++ )
+            {
+                if ( i + 1 < A.Count() )
+                {
+                    if ( A[i + 1] - A[i] == 1 )
+                    {
+                        t++;
+                        c = true;
+                    }
+                    else
+                    {
+                        c = false;
+                    }
+                }
+                else
+                {
+                    c = false;
+                }
+                if ( t > r && !c )
+                {
+                    r = t;
+                    t = 1;
+                }
+            }
+            return r;
+        }
+
+
         private static void VerifyBadgeFirstByType( AdventureContext context, int userId, BadgeCodes code )
         {
             var result = ( from r in context.Responses
