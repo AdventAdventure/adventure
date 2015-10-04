@@ -474,18 +474,34 @@ h2 {
 }
 
 .badge {
-	display: inline-block;
+	vertical-align: middle;
+	padding: 0 0.625rem;
 	width: 100%;
-	max-width: 16.6667%;
 }
 
 .badge img {
-	padding: 0 1.25rem;
 	opacity: 0.5;
+	margin: 0 auto;
+	max-width: 164px;
+	width: 100%;
 }
 
-.badge .nailed-it {
+.badge img[src*="-full"] {
 	opacity: 1;
+}
+
+@media screen and (min-width: 30em) {
+
+	.badges {
+		width: 100%;
+		display: table;
+		table-layout: fixed;
+	}
+
+	.badge {
+		display: table-cell;
+	}
+
 }
 
 /* Day header

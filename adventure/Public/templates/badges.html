@@ -1,7 +1,8 @@
 <div class="slab">
+	<h1>Earn badges for your efforts</h1>
 	<div class="badges clear" ng-if="user.Badges!==undefined">
-		<div class="badge" ng-repeat="badge in user.Badges">
-			<img src="/public/images/badge-{{badge.BadgeId}}.svg" ng-class="{'nailed-it': badge.BadgeId.indexOf( badges ) == -1}" />
+		<div class="badge" ng-repeat="badge in user.Badges"> {{badge}}
+			<img src="/public/images/badges/badge-{{badge.suffix}}.png" />
 		</div>
 	</div>
 </div>
