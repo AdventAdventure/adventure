@@ -25,7 +25,7 @@ namespace Adventure.Controllers
                             Day = n,
                             Challenge = new Challenge
                             {
-                                Name = "Challenge for November " + n,
+                                Name = "Challenge for December " + n,
                                 ChallengeNumber = n
                             }
                         });
