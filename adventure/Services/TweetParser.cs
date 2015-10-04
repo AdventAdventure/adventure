@@ -130,7 +130,7 @@ namespace Adventure.Services
             };
             adventureContext.UserChallenges.Add(userChallenge);
             adventureContext.SaveChanges();
-            TwitterResponder.SendTweetReply(user.ScreenName, challenge.InfoResponse, tweet.TweetId_num);
+            TwitterResponder.SendMoreInfo( user.ScreenName, challenge, tweet.TweetId_num);
             new BadgeFinder(adventureContext).VerifyBadges(user.UserId);
         }
     }
