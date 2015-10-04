@@ -19,6 +19,11 @@ namespace Adventure.Models
         FirstParticipation,
         Image,
         Audio,
-        Video
+        Video,
+        Streak3,
+        Streak6,
+        Streak12,
+        Streak18,
+        Streak24
     }
 }

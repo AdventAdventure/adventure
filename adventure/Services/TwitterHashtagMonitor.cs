@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using LinqToTwitter;
 
@@ -66,7 +67,16 @@ namespace Adventure.Services
                 TweetId = status.StatusID.ToString(),
                 Media = status.Entities.MediaEntities
             };
-            await TweetParser.Main( tweet );
+            try
+            {
+                TweetParser.Main(tweet);
+
+            }
+            catch (System.Exception e)
+            {
+                Debug.Write(e.ToString());
+                throw;
+            }
             await Task.Yield();
         }
 

@@ -10,8 +10,6 @@ namespace Adventure.Quartz
     class ChallengeTweetJob : IJob
     {
 
-        private static readonly ILog Log = LogManager.GetLogger( typeof( ChallengeTweetJob ) );
-
         /// <summary> 
         /// Empty constructor for job initilization
         /// <para>

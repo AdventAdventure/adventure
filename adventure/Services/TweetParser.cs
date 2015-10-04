@@ -9,7 +9,7 @@ namespace Adventure.Services
 {
     public static class TweetParser
     {
-        public static async Task Main( Tweet twitterMessage )
+        public static void Main( Tweet twitterMessage )
         {
             var twitterUser = twitterMessage.TweetId_num;
             var hashtags = twitterMessage.HashTags.ToList();
@@ -33,7 +33,7 @@ namespace Adventure.Services
                 var challenge = GetChallengeForDay( adventureContext, day );
                 if ( challenge == null )
                 {
-                    await TwitterResponder.SendTweetReply( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser );
+                    TwitterResponder.SendTweetReply( "Hey! That submission doesn't make any sense to us. Reply @adventiswhat if you think it should.", twitterUser );
                     return;
                 }
 
@@ -47,12 +47,12 @@ namespace Adventure.Services
                 }
                 else
                 {
-                    await TwitterResponder.SendTweetReply( "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser );
+                    TwitterResponder.SendTweetReply( "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser );
 
                     if ( twitterMessage.TimeStamp.Date > DateTime.Now.Date ) return;
 
                     var dayDifference = ( DateTime.Now.Date - twitterMessage.TimeStamp.Date ).Days;
-                    await TwitterResponder.SendTweetReply( "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
+                    TwitterResponder.SendTweetReply( "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
                         dayDifference + " days!", twitterUser );
                 }
             }
@@ -157,18 +157,14 @@ namespace Adventure.Services
                 string strippedTweet = StripContent( tweet );
                 CompleteChallenge( challenge, user, tweet, adventureContext );
             }
-            else
-            {
-                return;
-            }
         }
 
-        public static async void CompleteChallenge( Challenge challenge, User user, Tweet tweet, AdventureContext adventureContext )
+        public static void CompleteChallenge( Challenge challenge, User user, Tweet tweet, AdventureContext adventureContext )
         {
             var userChallenge = new UserChallenge { ChallengeId = challenge.ChallengeId, UserId = user.UserId, IsComplete = true };
             adventureContext.UserChallenges.Add( userChallenge );
             adventureContext.SaveChanges();
-            await TwitterResponder.SendTweetReply( challenge.InfoResponse, tweet.TweetId_num );
+            TwitterResponder.SendTweetReply( challenge.InfoResponse, tweet.TweetId_num );
             VerifyBadges( user.UserId );
         }
 
@@ -215,6 +211,83 @@ namespace Adventure.Services
                 }
             }
         }
+
+        private static void VerifyBadgeStreak( AdventureContext context, int userId )
+        {
+            int[] previousDays = ( from uc in context.UserChallenges.Where( x => x.UserId == userId && x.IsComplete == true )
+                                   from c in context.Challenges
+                                   select c.ChallengeNumber )
+                                 .ToArray();
+            int streak = getConsecutiveCount( previousDays );
+            for ( int i = 0; i <= 24; )
+            {
+                if ( streak >= i )
+                {
+                    var streakBadge = ( from ub in context.UserBadges
+                                  from b in context.Badges.Where( x => x.BadgeId == ub.BadgeId )
+                                  where ub.UserId == userId
+                                  where b.Code == "Streak" + i.ToString()
+                                  select b );
+                    if (streakBadge == null)
+                    {
+                        var badge = context.Badges.First( x => x.Code == "Streak" + i.ToString() );
+
+                        context.UserBadges.Add( new UserBadge
+                        {
+                            BadgeId = badge.BadgeId,
+                            UserId = userId
+                        } );
+
+                    }
+
+                }
+                else
+                {
+                    break;
+                }
+
+                if ( i <= 6 )
+                {
+                    i += 3;
+                }
+                else
+                {
+                    i += 6;
+                }
+            }
+        }
+
+        public static int getConsecutiveCount( int[] A )
+        {
+            int r = 1, t = 1;
+            bool c = false;
+            for ( int i = 0; i < A.Count(); i++ )
+            {
+                if ( i + 1 < A.Count() )
+                {
+                    if ( A[i + 1] - A[i] == 1 )
+                    {
+                        t++;
+                        c = true;
+                    }
+                    else
+                    {
+                        c = false;
+                    }
+                }
+                else
+                {
+                    c = false;
+                }
+                if ( t > r && !c )
+                {
+                    r = t;
+                    t = 1;
+                }
+            }
+            return r;
+        }
+
 
         private static void VerifyBadgeFirstByType( AdventureContext context, int userId, BadgeCodes code )
         {
