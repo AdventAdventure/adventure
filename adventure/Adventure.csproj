@@ -209,6 +209,8 @@
     <Compile Include="Quartz\ScheduledTweet.cs" />
     <Compile Include="Quartz\IScheduledJob.cs" />
     <Compile Include="Services\BadgeFinder.cs" />
+    <Compile Include="Services\ContentDeterminier.cs" />
+    <Compile Include="Services\ResponseSaver.cs" />
     <Compile Include="Services\Tweet.cs" />
     <Compile Include="Services\TwitterHashtagMonitor.cs" />
     <Compile Include="Services\TweetParser.cs" />

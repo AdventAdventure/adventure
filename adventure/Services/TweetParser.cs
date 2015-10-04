@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Adventure.Models;
 
 namespace Adventure.Services
@@ -36,33 +35,33 @@ namespace Adventure.Services
                 var previouslyComplete = CheckChallengeComplete(adventureContext, challenge, user);
                 if (previouslyComplete == false)
                 {
-                    NewResponse(adventureContext, twitterMessage, challenge);
-                    DetermineContent(twitterMessage, challenge, user, adventureContext);
+                    ResponseSaver.SaveNewResponse(adventureContext, twitterMessage, challenge);
+                    ContentDeterminier.DetermineContent(twitterMessage, challenge, user, adventureContext);
                     return;
                 }
-                if (twitterMessage.TimeStamp.Date > DateTime.Now.Date)
-                {
-                    ReplyWithAlreadyAnswered(twitterMessage, twitterUser);
-                }
-                else
-                {
-                    ReplyWithTooSoon(twitterUser);
-                }
+                ReplyWithError(twitterMessage, twitterUser);
             }
         }
 
-        private static void ReplyWithTooSoon(ulong twitterUser)
+        private static void ReplyWithError(Tweet twitterMessage, ulong twitterUser)
         {
-            TwitterResponder.SendTweetReply(
-                "Wow! You're enthusiastic! Looks like you've already completed that challenge.", twitterUser);
+            var message = twitterMessage.TimeStamp.Date > DateTime.Now.Date
+                ? ReplyWithAlreadyAnswered(twitterMessage)
+                : ReplyWithTooSoon();
+            TwitterResponder.SendTweetReply(message, twitterUser);
         }
 
-        private static void ReplyWithAlreadyAnswered(Tweet twitterMessage, ulong twitterUser)
+        private static string ReplyWithTooSoon()
+        {
+            var message = "Wow! You're enthusiastic! Looks like you've already completed that challenge.";
+            return message;
+        }
+
+        private static string ReplyWithAlreadyAnswered(Tweet twitterMessage)
         {
             var dayDifference = (DateTime.Now.Date - twitterMessage.TimeStamp.Date).Days;
-            TwitterResponder.SendTweetReply(
-                "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
-                dayDifference + " days!", twitterUser);
+            return  "Wow, you're keen! You're a bit ahead of schedule with that #hashtag. Try again in " +
+                            dayDifference + " days!";
         }
 
         private static int FindDayFromHashtag(List<string> hashtags)
@@ -120,61 +119,6 @@ namespace Adventure.Services
             return newUser;
         }
 
-        private static void NewResponse(AdventureContext adventureContext, Tweet tweet, Challenge challenge)
-        {
-            var user = adventureContext.Users
-                .First(u => u.TwitterId == tweet.TwitterUserIdentifier);
-
-            var response = new Response
-            {
-                UserId = user.UserId,
-                Tweet = tweet.Text,
-                TweetId = tweet.TweetId,
-                ChallengeId = challenge.ChallengeId
-            };
-            adventureContext.Responses.Add(response);
-            adventureContext.SaveChanges();
-        }
-
-
-        public static void DetermineContent(Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext)
-        {
-            // Is image?
-            if (tweet.Media.FirstOrDefault() != null && challenge.Type.ToLower() == "image")
-            {
-                CompleteChallenge(challenge, user, tweet, adventureContext);
-            }
-            // Is URL?
-            else if (tweet.Urls.Any())
-            {
-                var youtubeTest = new Regex("(https?://)?(www\\.)?(yotu\\.be/|youtube\\.com/)?((.+/)?(watch(\\?v=|.+&v=))?(v=)?)([\\w_-]{11})(&.+)?");
-                var instagramTest = new Regex(@"http://instagr\.?am(?:\.com)?/\S*");
-                var vineTest = new Regex(@"https://vine.co/v/\w*$@i");
-                var soundcloudTest = new Regex(@"(https?://)?(www\\.)?( soundcloud.com | snd.sc )(.)");
-
-                if (youtubeTest.IsMatch(tweet.Urls.Any().ToString()) && (challenge.Type.ToLower() == "video" | challenge.Type.ToLower() == "audio"))
-                {
-                    CompleteChallenge(challenge, user, tweet, adventureContext);
-                }
-                if (instagramTest.IsMatch(tweet.Urls.Any().ToString()) && challenge.Type.ToLower() == "image")
-                {
-                    CompleteChallenge(challenge, user, tweet, adventureContext);
-
-                }
-                if (vineTest.IsMatch(tweet.Urls.Any().ToString()) && challenge.Type.ToLower() == "video")
-                {
-                    CompleteChallenge(challenge, user, tweet, adventureContext);
-                }
-
-            }
-            // Is text response
-            else if (challenge.Type.ToLower() == "Text")
-            {
-                tweet.Text = StripContent(tweet);
-
-                CompleteChallenge(challenge, user, tweet, adventureContext);
-            }
-        }
 
         public static void CompleteChallenge(Challenge challenge, User user, Tweet tweet, AdventureContext adventureContext)
         {
@@ -188,15 +132,6 @@ namespace Adventure.Services
             adventureContext.SaveChanges();
             TwitterResponder.SendTweetReply(challenge.InfoResponse, tweet.TweetId_num);
             new BadgeFinder(adventureContext).VerifyBadges(user.UserId);
-        }
-
-        private static string StripContent(Tweet tweet)
-        {
-            var removeMentions = new Regex(@"/(^|\b)@\S*($|\b)/");
-            var removeHashtags = new Regex(@"/(^|\b)#\S*($|\b)/");
-            var strippedTweet = removeMentions.Replace(tweet.Text, "");
-            strippedTweet = removeHashtags.Replace(strippedTweet, "");
-            return strippedTweet;
         }
     }
 }
