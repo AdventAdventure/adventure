@@ -189,7 +189,8 @@ h2 {
 }
 
 .main-nav a {
-	transition: 300ms color;
+	-webkit-transition: 300ms color;
+			transition: 300ms color;
 	line-height: 1.4;
 	text-align: center;
 	display: block;
@@ -200,7 +201,8 @@ h2 {
 }
 
 .main-nav a img {
-	transition: 300ms all;
+	-webkit-transition: 300ms all;
+			transition: 300ms all;
 	opacity: 0.5;
 }
 
@@ -271,7 +273,8 @@ h2 {
 --------------------------------*/
 
 .button {
-	transition: 300ms all;
+	-webkit-transition: 300ms all;
+			transition: 300ms all;
 	box-shadow: 3px 3px 0 0 #8F141F;
 	cursor: pointer;
 	padding: 0.8rem 1.5rem;
@@ -379,7 +382,9 @@ body {
 
 .challenge--home {
 	position: relative;
+	-webkit-transition-delay: 1s;
 	transition-delay: 1s;
+	-webkit-transition: 300ms;
 	transition: 300ms;
 	-webkit-perspective: 800px;
 	        perspective: 800px;
@@ -434,7 +439,8 @@ body {
 }
 
 .challenge__date {
-	transition: 200ms all;
+	-webkit-transition: 200ms all;
+			transition: 200ms all;
 	position: absolute;
 	right: 1rem;
 	bottom: 1rem;
