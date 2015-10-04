@@ -253,12 +253,9 @@ var Adventure = (function () {
                     var user_id = Adventure.GetCookie( 'adventureTwitter' );
                     $scope.user = null;
 
-                    var badge_images = [
-                        '', 'pin', 'bells', 'gingerbread', 'trophy', 'star', 'cane', 'world'
-                    ];
-
                     if ( user_id ) {
-                        Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                        // 'http://adventure-1.apphb.com/api/user/' + user_id
+                        Adventure.Ajax.Retrieve( '/Test/user.json', $q ).then( function( user ) {
                             if ( user !== undefined ) {
                                 var badges = [],
                                     i;
@@ -267,9 +264,10 @@ var Adventure = (function () {
                                         badges.push( user.UserBadges[ i ].BadgeId );
                                     }
                                 }
+                                console.log( badges );
                                 if ( user.Badges !== undefined ) {
                                     for (i = 0; i < user.Badges.length; i++) {
-                                        user.Badges[ i ].suffix = badge_images[ user.Badges[ i ].BadgeId ] + ( badges.indexOf( user.Badges[ i ].BadgeId ) == -1 ? '-full' : '' );
+                                        user.Badges[ i ].suffix = user.Badges[ i ].Code + ( badges.indexOf( user.Badges[ i ].BadgeId ) == -1 ? '' : '-full' );
                                     }
                                 }
                                 $scope.badges = badges;

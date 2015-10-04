@@ -461,8 +461,13 @@ body {
 
 	.advent-calendar {
 		overflow-x: hidden;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
 		display: flex;
-		flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		        flex-wrap: wrap;
 	}
 
 	.challenge--home {
@@ -493,7 +498,7 @@ body {
 		        transform-origin: right bottom;
 		left: auto;
 		right: 0;
-		border-left: 2px dashed rgba( 175, 52, 63, 0.5 );
+		border-left: 2px dashed rgba( 200, 75, 90, 1 );
 		border-top: 0;
 	}
 
@@ -551,7 +556,7 @@ body {
 }
 
 .challenge--home + .challenge--home {
-	border-top: 2px solid rgba( 230, 85, 85, 0.2 );
+	border-top: 2px solid rgba( 230, 85, 85, 0.4 );
 }
 
 .challenge--home a {

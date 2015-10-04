@@ -1,48 +1,30 @@
 {
     "User": {
-        "UserId": 1,
-        "UserName": "Har 10t",
-        "TwitterId": "871769268",
-        "ScreenName": "har10t"
+        "UserId": 3,
+        "UserName": "Simon Harriyott",
+        "TwitterId": "707303",
+        "ScreenName": "harriyott"
     },
-    "Responses": [{
-        "ResponseId": 1,
-        "UserId": 1,
-        "Tweet": "#AdventHunt1 #submit Regular old dude",
-        "TweetId": "650453899862802432",
-        "ChallengeId": 1
-    }],
-    "Challenges": [{
-        "ChallengeId": 1,
-        "ChallengeNumber": 1,
-        "Name": "Challenge for November 1",
-        "Bonus": false,
-        "Value": null,
-        "Type": null,
-        "InfoResponse": null
-    }],
+    "Responses": [],
+    "Challenges": [],
     "Badges": [{
         "BadgeId": 1,
-        "Name": "First answer",
+        "Name": "To earn this badge, connect to Twitter and submit your answer to today's challenge",
         "Code": "FirstParticipation"
     }, {
         "BadgeId": 2,
-        "Name": "Image",
+        "Name": "To earn this badge, connect to Twitter and submit a picture answer to the next challenge",
         "Code": "Image"
     }, {
         "BadgeId": 3,
-        "Name": "Audio",
+        "Name": "To earn this badge, connect to Twitter and submit an audio answer to the next challenge",
         "Code": "Audio"
     }, {
         "BadgeId": 4,
-        "Name": "Video",
+        "Name": "To earn this badge, connect to Twitter and submit a video answer to the next challenge",
         "Code": "Video"
     }],
     "UserBadges": [{
-        "UserId": 1,
-        "BadgeId": 1
-    }, {
-        "UserId": 1,
-        "BadgeId": 3
+        "BadgeId": 2
     }]
 }
