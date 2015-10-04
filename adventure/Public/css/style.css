@@ -140,14 +140,18 @@ h2 {
 [role="banner"] {
 	border-bottom: 1px solid rgba( 223, 84, 85, 0.2 );;
 	padding-bottom: 1rem;
-	font-family: 'Josefin Slab', sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
 	padding-top: 1rem;
 	font-size: 1.25em;
 	background: #212121;
 }
 
 [role="banner"] .logo {
-	color: #FFF;	
+	color: #CCC;	
+}
+
+[role="banner"] .logo strong {
+	color: #FFF;
 }
 
 /* Main nav
@@ -253,7 +257,7 @@ h2 {
 	.main-nav a {
 		text-transform: none;
 		margin-left: 2rem;
-		font-size: 0.875rem;
+		font-size: 1rem;
 		padding-top: 0;
 		height: auto;
 	}
@@ -263,6 +267,7 @@ h2 {
 --------------------------------*/
 
 .button {
+	transition: 300ms all;
 	box-shadow: 3px 3px 0 0 #8F141F;
 	cursor: pointer;
 	padding: 0.8rem 1.5rem;
@@ -276,10 +281,10 @@ h2 {
 	font: 400 1em 'Josefin Sans', sans-serif;
 }
 
-/*.button.tweet {
-	background: #19B5FE;
-	box-shadow: 3px 3px 0 0 #447890;
-}*/
+.button:hover {
+	background: #8F141F;
+	box-shadow: 3px 3px 0 0 #7F040F;
+}
 
 .button + .button {
 	margin-top: 0;
@@ -302,11 +307,11 @@ h2 {
 
 .slab {
 	margin-bottom: 1.5rem;
-	box-shadow: 7px 7px 0 0 rgba( 255, 255, 255, 0.05 );
+	box-shadow: 7px 7px 0 0 rgba( 255, 255, 255, 0.1 );
 	padding-top: 1.25rem;
 	padding-bottom: 1.25rem;
 	position: relative;
-	background: #E1C4BE;
+	background: #FAFAFA;
 	color: #353238;
 }
 
@@ -316,6 +321,16 @@ h2 {
 
 .slab--content {
 	font-size: 1.25em;
+}
+
+.slab--content ul {
+	margin-bottom: 1rem;
+}
+
+.slab--content li {
+	list-style-position: outside;
+	list-style: disc;
+	margin: 0 0 0.25rem 1.6rem;
 }
 
 /* Challenge
@@ -472,6 +487,84 @@ h2 {
 .badge .nailed-it {
 	opacity: 1;
 }
+
+/* Day header
+--------------------------------*/
+
+.day-header {
+	background-position: center;
+	background-color: rgba( 0, 0, 0, 0.1 );
+	background-size: cover;
+	text-align: center;
+	position: relative;
+	padding: 2rem 0;
+	color: #FFF;
+}
+
+.day-header:after {
+	content: '';
+	background: rgba( 0, 0, 0, 0.3 );
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	color: #FFF;
+	left: 0;
+	top: 0;
+}
+
+.day-header .wrap {
+	position: relative;
+	z-index: 2;
+}
+
+.day-header h1 {
+	line-height: 1.2;
+}
+
+.day-header .button {
+	margin: 0 0 1rem;
+	width: 100%;
+	font-weight: 400;
+}
+
+@media screen and ( min-width: 30em ) {
+
+	.day-header {
+		padding: 5rem 0;
+		margin-bottom: 1.5rem;
+	}
+
+	.day-header .button {
+		width: auto;
+		margin: 0 1rem 1rem 0;
+	}
+
+}
+
+@media screen and ( min-width: 40em ) {
+
+	.day-header {
+		padding: 8rem 0;
+		font-size: 1.25em;
+	}
+
+	.day-header h1 {
+		/*font-size: */
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
