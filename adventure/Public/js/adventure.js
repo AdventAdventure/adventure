@@ -11,8 +11,8 @@ var Adventure = (function () {
             if (location.href.indexOf("apphb") >= 0)
                 ajax_url = "http://adventure-1.apphb.com/api/days";
 
-            if ( ! $( '.badge-link' ).hasClass( 'has-user' ) ) {
-                // console.log( twitterService.isReady() );
+            if ( location.href === 'http://adventure-1.apphb.com/' ) {
+                console.log( location.href = 'http://adventure-1.apphb.com/#/' );
             }
 
         },
@@ -112,6 +112,15 @@ var Adventure = (function () {
                     }).then(function( response ) {
                         $( '.slab--content' ).html( response );
                     });
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'public/content/images/' + day_id + '.jpg',
+                        datatype: 'image/jpg',
+                        success: function (data) {
+                            $scope.background = 'background-image: url(/public/content/images/' + day_id + '.jpg);';
+                        }
+                     });
 
                     Adventure.Ajax.Retrieve( ajax_url, $q ).then( function( dayslist ) {
                         if ( dayslist !== undefined ) {
