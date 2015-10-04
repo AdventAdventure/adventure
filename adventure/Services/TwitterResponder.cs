@@ -26,7 +26,7 @@ namespace Adventure.Services
         public static void SendMoreInfo( string twitterUser, Challenge challenge, ulong replyId )
         {
             var twitterContext = new TwitterContext( TwitterHashtagMonitor.Authorizer );
-            var tweet = string.Format( "@{0} {1} To find out more visit http://adventure-1.apphb.com/#/day/{2}/more", twitterUser, challenge.InfoTweet, challenge.ChallengeNumber );
+            var tweet = string.Format( "@{0} Congratulations! You earned {1} points, find out more about today's challenge at http://adventure-1.apphb.com/#/day/{2}/more", twitterUser, challenge.Value, challenge.ChallengeNumber );
             Task.FromResult( twitterContext.ReplyAsync( replyId, tweet ) );
         }
 
