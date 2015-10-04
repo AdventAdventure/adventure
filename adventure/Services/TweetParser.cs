@@ -118,17 +118,15 @@ namespace Adventure.Services
             };
             adventureContext.Responses.Add( response );
             adventureContext.SaveChanges();
-
-            VerifyBadges( user.UserId );
         }
 
-        public static void DetermineContent( Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext )
+
+        public static async void DetermineContent( Tweet tweet, Challenge challenge, User user, AdventureContext adventureContext )
         {
             // Is image?
             if ( !( tweet.Media.FirstOrDefault() == null ) && challenge.Type.ToLower() == "image" )
             {
-                SendResponse( tweet, challenge );
-                CompleteChallenge( challenge, user, adventureContext );
+                CompleteChallenge( challenge, user, tweet, adventureContext );
             }
             // Is URL?
             else if ( tweet.Urls.Any() )
@@ -140,29 +138,24 @@ namespace Adventure.Services
 
                 if ( youtubeTest.IsMatch( tweet.Urls.Any().ToString() ) && ( challenge.Type.ToLower() == "video" | challenge.Type.ToLower() == "audio" ) )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
-
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
                 }
                 if ( instagramTest.IsMatch( tweet.Urls.Any().ToString() ) && challenge.Type.ToLower() == "image" )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
 
                 }
                 if ( vineTest.IsMatch( tweet.Urls.Any().ToString() ) && challenge.Type.ToLower() == "video" )
                 {
-                    SendResponse( tweet, challenge );
-                    CompleteChallenge( challenge, user, adventureContext );
-
+                    CompleteChallenge( challenge, user, tweet, adventureContext );
                 }
 
             }
             // Is text response
-            else if (challenge.Type.ToLower()=="Text")
+            else if ( challenge.Type.ToLower() == "Text" )
             {
                 string strippedTweet = StripContent( tweet );
-                CompleteChallenge( challenge, user, adventureContext );
+                CompleteChallenge( challenge, user, tweet, adventureContext );
             }
             else
             {
@@ -170,11 +163,13 @@ namespace Adventure.Services
             }
         }
 
-        public static void CompleteChallenge( Challenge challenge, User user, AdventureContext adventureContext )
+        public static async void CompleteChallenge( Challenge challenge, User user, Tweet tweet, AdventureContext adventureContext )
         {
             var userChallenge = new UserChallenge { ChallengeId = challenge.ChallengeId, UserId = user.UserId, IsComplete = true };
             adventureContext.UserChallenges.Add( userChallenge );
             adventureContext.SaveChanges();
+            await TwitterResponder.SendTweetReply( challenge.InfoResponse, tweet.TweetId_num );
+            VerifyBadges( user.UserId );
         }
 
         private static string StripContent( Tweet tweet )
@@ -186,15 +181,6 @@ namespace Adventure.Services
             return strippedTweet;
         }
 
-        private static void SendResponse( Tweet tweet, Challenge challenge )
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void TweetUser( string username, string message )
-        {
-            throw new NotImplementedException();
-        }
 
         private static void VerifyBadges( int userId )
         {
