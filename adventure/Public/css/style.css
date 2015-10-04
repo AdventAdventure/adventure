@@ -180,6 +180,10 @@ h2 {
 	border-left: 1px solid #9F242F;
 }
 
+.main-nav li:nth-child(4) {
+	display: none;
+}
+
 .main-nav a {
 	transition: 300ms color;
 	line-height: 1.4;
@@ -236,6 +240,10 @@ h2 {
 
 	.main-nav li {
 		width: auto;
+	}
+
+	.main-nav li:nth-child(4) {
+		display: table-cell;
 	}
 
 	.main-nav li + li {
@@ -442,3 +450,30 @@ h2 {
 .ranking__me {
 	background-color: rgba( 255, 255, 255, 0.3 );
 }
+
+/* Badges
+--------------------------------*/
+
+.badges {
+	font-size: 0;
+}
+
+.badge {
+	display: inline-block;
+	width: 100%;
+	max-width: 16.6667%;
+}
+
+.badge img {
+	padding: 0 1.25rem;
+	opacity: 0.5;
+}
+
+.badge .nailed-it {
+	opacity: 1;
+}
+
+
+
+
+

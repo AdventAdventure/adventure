@@ -34,7 +34,6 @@ angular.module('twitterApp.services', []).factory('twitterService', function($q)
             return result;
         },
         connectTwitter: function() {
-            console.log( authorizationResult );
             var deferred = $q.defer();
             OAuth.popup('twitter', {cache:true}, function(error, result) {
                 if ( ! error) {

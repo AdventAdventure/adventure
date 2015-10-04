@@ -11,6 +11,10 @@ var Adventure = (function () {
             if (location.href.indexOf("apphb") >= 0)
                 ajax_url = "http://adventure-1.apphb.com/api/days";
 
+            if ( ! $( '.badge-link' ).hasClass( 'has-user' ) ) {
+                // console.log( twitterService.isReady() );
+            }
+
         },
 
         Angular: {
@@ -132,21 +136,16 @@ var Adventure = (function () {
 
                 },
 
-                UserProfile: function ( $scope, $q, $state, twitterService ) {
+                UserProfile: function ( $scope, $q, twitterService ) {
 
-                    var user_id = '';
+                    var user_id = Adventure.GetCookie( 'adventureTwitter' );
                     $scope.user = null;
 
-                    var service = twitterService.isReady();
-                    if ( service ) {
-                        service.me().done(function (result) {
-                            user_id = result.alias;
-
-                            Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
-                                if ( user !== undefined ) {
-                                    $scope.user = user;
-                                }
-                            });
+                    if ( user_id ) {
+                        Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                            if ( user !== undefined ) {
+                                $scope.user = user;
+                            }
                         });
                     }
 
@@ -203,9 +202,25 @@ var Adventure = (function () {
                     };
                 },
 
-                Badges: function () {
+                Badges: function ( $scope, $q, twitterService ) {
 
-                    
+                    var user_id = Adventure.GetCookie( 'adventureTwitter' );
+                    $scope.user = null;
+
+                    if ( user_id ) {                  
+                        Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
+                            if ( user !== undefined ) {
+                                var badges = [];
+                                if ( user.UserBadges !== undefined ) {
+                                    for (var i = 0; i < user.UserBadges.length; i++) {
+                                        badges.push( user.UserBadges[ i ].BadgeId );
+                                    }
+                                }
+                                $scope.badges = badges;
+                                $scope.user = user;
+                            }
+                        });
+                    }
 
                 },
 
@@ -218,8 +233,6 @@ var Adventure = (function () {
             },
 
             Router: function ( $stateProvider, $urlRouterProvider ) {
-
-                // $urlRouterProvider.otherwise( '/404' );
 
                 $stateProvider
                     .state('days', {
@@ -255,6 +268,11 @@ var Adventure = (function () {
                         templateUrl: 'Public/templates/badges.html',
                         controller: Adventure.Angular.Controller.Badges
                     })
+                    .state('badges.id', {
+                        url: "/badges/:user_id",
+                        templateUrl: 'Public/templates/badges.html',
+                        controller: Adventure.Angular.Controller.Badges
+                    })
                     .state('user/profile', {
                         url: "/user/profile",
                         templateUrl: 'Public/templates/user-profile.html',
@@ -284,7 +302,6 @@ var Adventure = (function () {
                 var xhr = $.getJSON( url, callback )
                     .fail(function( jqxhr, textStatus, error ) {
                         var err = textStatus + ", " + error;
-                        console.log("Request Failed: " + err);
                     });
 
             },
@@ -306,9 +323,6 @@ var Adventure = (function () {
                     num_chals = response.Days[dayno].Challenges.length,
                     chal = response.Days[dayno].Challenges,
                     chal_title = response.Days[dayno].Challenges[0].Challenge.Title;
-
-                console.log("JSON loaded....");
-                console.log("Day: " + day_id + " Num Challenges: " + num_chals + " " + chal_title);
             }
 
         },
@@ -331,25 +345,27 @@ var Adventure = (function () {
         Twitter: {
 
             Controller: function ( $scope, $q, twitterService, $state ) {
-
-                $scope.tweets = [];
                 
                 twitterService.initialize();
                 
                 $scope.Connect = function() {
-                    twitterService.connectTwitter().then(function() {
-                        if (twitterService.isReady()) {
-                            $state.reload();
-                        }
-                    });
+                    var cookie = Adventure.GetCookie( 'adventureTwitter' );
+                    if ( cookie ) {
+                        return cookie;
+                    } else {
+                        OAuth.popup('twitter', {cache:true} )
+                            .done( function ( result ) {
+                                result.me()
+                                    .done( function ( response ) {
+                                        document.cookie = 'adventureTwitter=Har 10t;expires=Fri, 25 Dec 2015 23:59:59 GMT';
+                                        $state.go($state.current, {}, {reload: true});
+                                    });
+                            });
+                    }
                 };
 
                 $scope.SignOut = function() {
                     twitterService.clearCache();
-                    $scope.tweets.length = 0;
-                    $('#getTimelineButton, #signOut').fadeOut(function(){
-                        $('#connectButton').fadeIn();
-                    });
                 };
 
                 if (twitterService.isReady()) {
@@ -364,6 +380,16 @@ var Adventure = (function () {
 
             }
 
+        },
+
+        GetCookie: function ( key ) {
+            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+        },
+
+        KillCookie: function ( key ) {
+            var sDomain = '',
+                sPath = '';
+            return document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
         }
 
     };
