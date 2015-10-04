@@ -17,7 +17,7 @@ namespace Adventure.Controllers
             {
                 var t = context.Users.First();
 
-                result.Positions = ( from r in context.UserChallenges.Where( x => x.IsComplete == true)
+                result.Positions = ( from r in context.Responses
                                     from c in context.Challenges.Where(x => x.ChallengeId == r.ChallengeId)
                                     from u in context.Users.Where(x => x.UserId == r.UserId)
                                     group c by new { u.UserName } into g
