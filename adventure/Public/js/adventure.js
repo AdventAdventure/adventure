@@ -258,8 +258,7 @@ var Adventure = (function () {
                     ];
 
                     if ( user_id ) {
-                        // 'http://adventure-1.apphb.com/api/user/' + user_id 
-                        Adventure.Ajax.Retrieve( '/Test/user.json', $q ).then( function( user ) {
+                        Adventure.Ajax.Retrieve( 'http://adventure-1.apphb.com/api/user/' + user_id, $q ).then( function( user ) {
                             if ( user !== undefined ) {
                                 var badges = [],
                                     i;
