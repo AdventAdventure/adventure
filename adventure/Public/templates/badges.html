@@ -1,4 +1,4 @@
-<div class="slab" ng-if="user">
+<div class="slab" ng-if="!empty(user)">
 	<h1>Earn badges for your efforts</h1>
 	<div class="badges clear" ng-if="user.Badges!==undefined">
 		<div class="badge" ng-repeat="badge in user.Badges"> {{badge}}
@@ -7,7 +7,7 @@
 	</div>
 </div>
 
-<aside class="slab" ng-if="!user">
+<aside class="slab" ng-if="empty(user)">
 	<h1>Connect your Twitter account to earn badges</h1>
 	<div ng-controller="TwitterController">
 		<button ng-click="Connect()" class="button">Connect with Twitter</button>

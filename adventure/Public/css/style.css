@@ -459,8 +459,10 @@ body {
 
 @media screen and ( min-width: 25em ) {
 
-	.advert-calendar {
+	.advent-calendar {
 		overflow-x: hidden;
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	.challenge--home {
